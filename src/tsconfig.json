@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "target": "ES2022",
+      "module": "commonjs",
+      "rootDir": ".",
+      "outDir": "dist",
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "types": ["node", "express-session"]
+    },
+    "include": ["src", "scripts"]
+  }
