@@ -6,9 +6,11 @@
     <title>Login</title>
 </head>
 <body>
+
     <h1>Login</h1>
 
-    <form>
+    <form action="/login" method="POST">
+
         <div>
             <label for="email">E-mail:</label>
             <input
@@ -35,12 +37,16 @@
 
         <br>
 
-        <button type="submit">Entrar</button>
+        <button type="submit">
+            Entrar
+        </button>
+
     </form>
 
     <p>
         Ainda não possui uma conta?
         <a href="/cadastro">Cadastre-se</a>
     </p>
+
 </body>
 </html>
