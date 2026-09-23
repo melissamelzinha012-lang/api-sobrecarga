@@ -8,7 +8,8 @@
 <body>
     <h1>Cadastro</h1>
 
-    <form>
+    <form action="/cadastro" method="POST">
+
         <div>
             <label for="nome">Nome:</label>
             <input
@@ -44,16 +45,20 @@
                 placeholder="Digite sua senha"
                 required
             >
-        </div> 
+        </div>
 
         <br>
 
-        <button type="submit">Cadastrar</button>
+        <button type="submit">
+            Cadastrar
+        </button>
+
     </form>
 
     <p>
         Já possui uma conta?
         <a href="/login">Faça login</a>
     </p>
+
 </body>
 </html>
