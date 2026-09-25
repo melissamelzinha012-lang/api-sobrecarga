@@ -1,5 +1,6 @@
 
 
+
 import { Request, Response } from "express";
 
 export class DashboardController {
@@ -22,7 +23,19 @@ export class DashboardController {
         }
       ];
 
-      const provas = [];
+      const provas = [
+        {
+          disciplina: "Química",
+          data: "2026-10-05",
+          horario: "08:00"
+        },
+        {
+          disciplina: "Matemática",
+          data: "2026-10-08",
+          horario: "10:00"
+        }
+      ];
+
       const tarefas = [];
       const estudos = [];
       const conflitos = [];

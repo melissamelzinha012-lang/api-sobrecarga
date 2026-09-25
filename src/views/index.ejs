@@ -143,26 +143,41 @@
 </section>
 
 
-            <!-- PRÓXIMAS PROVAS -->
-            <section class="card">
-                <h2> Próximas provas</h2>
+           <!-- PRÓXIMAS PROVAS -->
 
-                <% if (provas.length === 0) { %>
+<section class="card">
+    <h2> Próximas provas</h2>
 
-                    <p>Nenhuma prova cadastrada.</p>
+    <% if (provas.length === 0) { %>
 
-                <% } else { %>
+        <p>Nenhuma prova cadastrada.</p>
 
-                    <% provas.forEach(prova => { %>
+    <% } else { %>
 
-                        <p>
-                            <%= prova.disciplina %>
-                        </p>
+        <% provas.forEach(prova => { %>
 
-                    <% }) %>
+            <div style="margin-bottom: 15px;">
 
-                <% } %>
-            </section>
+                <p>
+                    <strong>
+                        <%= prova.disciplina %>
+                    </strong>
+                </p>
+
+                <p>
+                    Data: <%= prova.data %>
+                </p>
+
+                <p>
+                    Horário: <%= prova.horario %>
+                </p>
+
+            </div>
+
+        <% }) %>
+
+    <% } %>
+</section>
 
 
             <!-- TAREFAS PENDENTES -->
