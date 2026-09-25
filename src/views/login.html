@@ -4,15 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+
+    <style>
+        .mensagem {
+            display: none;
+            padding: 10px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .mensagem.erro {
+            display: block;
+            color: #842029;
+            background-color: #f8d7da;
+        }
+
+        .mensagem.sucesso {
+            display: block;
+            color: #0f5132;
+            background-color: #d1e7dd;
+        }
+    </style>
 </head>
 <body>
 
     <h1>Login</h1>
 
-    <form action="/login" method="POST">
+    <div id="mensagem" class="mensagem"></div>
 
+    <form id="form-login">
         <div>
             <label for="email">E-mail:</label>
+
             <input
                 type="email"
                 id="email"
@@ -22,10 +45,12 @@
             >
         </div>
 
-        <br>
+          
+
 
         <div>
             <label for="senha">Senha:</label>
+
             <input
                 type="password"
                 id="senha"
@@ -35,18 +60,65 @@
             >
         </div>
 
-        <br>
+          
+
 
         <button type="submit">
             Entrar
         </button>
-
     </form>
 
     <p>
         Ainda não possui uma conta?
         <a href="/cadastro">Cadastre-se</a>
     </p>
+
+    <script>
+        const formulario = document.getElementById('form-login');
+        const elementoMensagem = document.getElementById('mensagem');
+
+        formulario.addEventListener('submit', async function(evento) {
+            evento.preventDefault();
+
+            elementoMensagem.textContent = '';
+            elementoMensagem.className = 'mensagem';
+
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+
+            try {
+                const resposta = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email,
+                        senha
+                    })
+                });
+
+                const dados = await resposta.json();
+
+                elementoMensagem.textContent = dados.mensagem;
+
+                if (resposta.ok) {
+                    elementoMensagem.className = 'mensagem sucesso';
+
+                    setTimeout(function() {
+                        window.location.href = '/';
+                    }, 1000);
+                } else {
+                    elementoMensagem.className = 'mensagem erro';
+                }
+            } catch (erro) {
+                elementoMensagem.textContent =
+                    'Não foi possível conectar ao servidor.';
+
+                elementoMensagem.className = 'mensagem erro';
+            }
+        });
+    </script>
 
 </body>
 </html>
