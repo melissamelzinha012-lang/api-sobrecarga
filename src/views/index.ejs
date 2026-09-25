@@ -217,26 +217,45 @@
     <% } %>
 </section>
 
-            <!-- PRÓXIMOS ESTUDOS -->
-            <section class="card">
-                <h2> Próximos estudos</h2>
+            
+<!-- PRÓXIMOS ESTUDOS -->
 
-                <% if (estudos.length === 0) { %>
+<section class="card">
+    <h2>📚 Próximos estudos</h2>
 
-                    <p>Nenhum estudo programado.</p>
+    <% if (estudos.length === 0) { %>
 
-                <% } else { %>
+        <p>Nenhum estudo programado.</p>
 
-                    <% estudos.forEach(estudo => { %>
+    <% } else { %>
 
-                        <p>
-                            <%= estudo.titulo %>
-                        </p>
+        <% estudos.forEach(estudo => { %>
 
-                    <% }) %>
+            <div style="margin-bottom: 15px;">
 
-                <% } %>
-            </section>
+                <p>
+                    <strong>
+                        <%= estudo.titulo %>
+                    </strong>
+                </p>
+
+                <p>
+                    Data: <%= estudo.data %>
+                </p>
+
+                <p>
+                    Horário:
+                    <%= estudo.horarioInicio %>
+                    -
+                    <%= estudo.horarioFim %>
+                </p>
+
+            </div>
+
+        <% }) %>
+
+    <% } %>
+</section>
 
 
             <!-- AVISOS DE CONFLITO -->

@@ -1,6 +1,4 @@
 
-
-
 import { Request, Response } from "express";
 
 export class DashboardController {
@@ -49,7 +47,21 @@ export class DashboardController {
         }
       ];
 
-      const estudos = [];
+      const estudos = [
+        {
+          titulo: "Revisão de Química",
+          data: "2026-10-01",
+          horarioInicio: "14:00",
+          horarioFim: "15:00"
+        },
+        {
+          titulo: "Exercícios de Matemática",
+          data: "2026-10-02",
+          horarioInicio: "16:00",
+          horarioFim: "17:00"
+        }
+      ];
+
       const conflitos = [];
 
       return res.render("dashboard/index", {
