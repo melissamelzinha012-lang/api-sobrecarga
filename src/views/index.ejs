@@ -221,7 +221,7 @@
 <!-- PRÓXIMOS ESTUDOS -->
 
 <section class="card">
-    <h2>📚 Próximos estudos</h2>
+    <h2> Próximos estudos</h2>
 
     <% if (estudos.length === 0) { %>
 
@@ -259,25 +259,25 @@
 
 
             <!-- AVISOS DE CONFLITO -->
-            <section class="card alerta">
-                <h2> Avisos de conflito</h2>
+<section class="card alerta">
+    <h2> Avisos de conflito</h2>
 
-                <% if (conflitos.length === 0) { %>
+    <% if (conflitos.length === 0) { %>
 
-                    <p>Nenhum conflito identificado.</p>
+        <p>Nenhum conflito identificado.</p>
 
-                <% } else { %>
+    <% } else { %>
 
-                    <% conflitos.forEach(conflito => { %>
+        <% conflitos.forEach(conflito => { %>
 
-                        <p>
-                            <%= conflito.mensagem %>
-                        </p>
+            <p>
+                <%= conflito.mensagem %>
+            </p>
 
-                    <% }) %>
+        <% }) %>
 
-                <% } %>
-            </section>
+    <% } %>
+</section>
 
 
             <!-- ATALHOS -->

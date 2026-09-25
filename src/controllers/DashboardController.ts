@@ -62,7 +62,16 @@ export class DashboardController {
         }
       ];
 
-      const conflitos = [];
+      const conflitos = [
+        {
+          mensagem:
+            "Conflito entre a aula de Matemática e o horário de estudo."
+        },
+        {
+          mensagem:
+            "Você possui dois compromissos no mesmo horário."
+        }
+      ];
 
       return res.render("dashboard/index", {
         compromissos,
