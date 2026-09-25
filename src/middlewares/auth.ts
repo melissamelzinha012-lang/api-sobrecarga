@@ -4,11 +4,13 @@ export function verificarLogin(
   req: Request,
   res: Response,
   next: NextFunction
-) {
-  if (!req.session.usuarioId) {
-    return res.status(401).json({
-      mensagem: 'Usuário não autenticado'
+): void {
+  if (!req.session.usuario) {
+    res.status(401).json({
+      mensagem: 'Acesso não autorizado. Faça login para continuar.'
     });
+
+    return;
   }
 
   next();
