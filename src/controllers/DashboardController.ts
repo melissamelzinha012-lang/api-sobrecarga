@@ -36,7 +36,19 @@ export class DashboardController {
         }
       ];
 
-      const tarefas = [];
+      const tarefas = [
+        {
+          titulo: "Estudar para a prova de Química",
+          prazo: "2026-10-03",
+          status: "Pendente"
+        },
+        {
+          titulo: "Fazer atividade de Matemática",
+          prazo: "2026-10-04",
+          status: "Pendente"
+        }
+      ];
+
       const estudos = [];
       const conflitos = [];
 

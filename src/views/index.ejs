@@ -180,27 +180,42 @@
 </section>
 
 
-            <!-- TAREFAS PENDENTES -->
-            <section class="card">
-                <h2> Tarefas pendentes</h2>
+           
+<!-- TAREFAS PENDENTES -->
 
-                <% if (tarefas.length === 0) { %>
+<section class="card">
+    <h2>✅ Tarefas pendentes</h2>
 
-                    <p>Nenhuma tarefa pendente.</p>
+    <% if (tarefas.length === 0) { %>
 
-                <% } else { %>
+        <p>Nenhuma tarefa pendente.</p>
 
-                    <% tarefas.forEach(tarefa => { %>
+    <% } else { %>
 
-                        <p>
-                            <%= tarefa.titulo %>
-                        </p>
+        <% tarefas.forEach(tarefa => { %>
 
-                    <% }) %>
+            <div style="margin-bottom: 15px;">
 
-                <% } %>
-            </section>
+                <p>
+                    <strong>
+                        <%= tarefa.titulo %>
+                    </strong>
+                </p>
 
+                <p>
+                    Prazo: <%= tarefa.prazo %>
+                </p>
+
+                <p>
+                    Status: <%= tarefa.status %>
+                </p>
+
+            </div>
+
+        <% }) %>
+
+    <% } %>
+</section>
 
             <!-- PRÓXIMOS ESTUDOS -->
             <section class="card">
