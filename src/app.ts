@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import session from 'express-session';
 import dotenv from 'dotenv';
+import dashboardRoutes from "./routes/dashboardRoutes";
 
 dotenv.config();
 
