@@ -102,31 +102,50 @@
 
         <div class="cards">
 
-            <!-- COMPROMISSOS DO DIA -->
-            <section class="card">
-                <h2>📅 Compromissos do dia</h2>
+            
+<!-- COMPROMISSOS DO DIA -->
 
-                <% if (compromissos.length === 0) { %>
+<section class="card">
+    <h2> Compromissos do dia</h2>
 
-                    <p>Nenhum compromisso para hoje.</p>
+    <% if (compromissos.length === 0) { %>
 
-                <% } else { %>
+        <p>Nenhum compromisso para hoje.</p>
 
-                    <% compromissos.forEach(compromisso => { %>
+    <% } else { %>
 
-                        <p>
-                            <%= compromisso.titulo %>
-                        </p>
+        <% compromissos.forEach(compromisso => { %>
 
-                    <% }) %>
+            <div style="margin-bottom: 15px;">
 
-                <% } %>
-            </section>
+                <p>
+                    <strong>
+                        <%= compromisso.titulo %>
+                    </strong>
+                </p>
+
+                <p>
+                    Data: <%= compromisso.data %>
+                </p>
+
+                <p>
+                    Horário:
+                    <%= compromisso.horarioInicio %>
+                    -
+                    <%= compromisso.horarioFim %>
+                </p>
+
+            </div>
+
+        <% }) %>
+
+    <% } %>
+</section>
 
 
             <!-- PRÓXIMAS PROVAS -->
             <section class="card">
-                <h2>📚 Próximas provas</h2>
+                <h2> Próximas provas</h2>
 
                 <% if (provas.length === 0) { %>
 
@@ -148,7 +167,7 @@
 
             <!-- TAREFAS PENDENTES -->
             <section class="card">
-                <h2>✅ Tarefas pendentes</h2>
+                <h2> Tarefas pendentes</h2>
 
                 <% if (tarefas.length === 0) { %>
 
@@ -170,7 +189,7 @@
 
             <!-- PRÓXIMOS ESTUDOS -->
             <section class="card">
-                <h2>⏰ Próximos estudos</h2>
+                <h2> Próximos estudos</h2>
 
                 <% if (estudos.length === 0) { %>
 
@@ -192,7 +211,7 @@
 
             <!-- AVISOS DE CONFLITO -->
             <section class="card alerta">
-                <h2>⚠️ Avisos de conflito</h2>
+                <h2> Avisos de conflito</h2>
 
                 <% if (conflitos.length === 0) { %>
 
@@ -214,7 +233,7 @@
 
             <!-- ATALHOS -->
             <section class="card">
-                <h2>🔗 Atalhos</h2>
+                <h2> Atalhos</h2>
 
                 <div class="atalhos">
 
