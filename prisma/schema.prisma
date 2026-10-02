@@ -8,12 +8,27 @@ datasource db {
 }
 
 model Usuario {
-  id        Int      @id @default(autoincrement())
-  nome      String   @db.VarChar(120)
-  email     String   @unique @db.VarChar(255)
-  senhaHash String   @map("senha_hash") @db.VarChar(255)
-  perfil    String   @default("usuario") @db.VarChar(30)
-  criadoEm  DateTime @default(now()) @map("criado_em")
+  id            Int      @id @default(autoincrement())
+  nome          String   @db.VarChar(120)
+  email         String   @unique @db.VarChar(255)
+  senhaHash     String   @map("senha_hash") @db.VarChar(255)
+  perfil        String   @default("usuario") @db.VarChar(30)
+  criadoEm      DateTime @default(now()) @map("criado_em")
+
+  compromissos  Compromisso[]
 
   @@map("usuarios")
-} 
+}
+
+model Compromisso {
+  id             Int      @id @default(autoincrement())
+  titulo         String   @db.VarChar(255)
+  data           DateTime @db.Date
+  horarioInicio  DateTime @map("horario_inicio") @db.Time(0)
+  horarioFim     DateTime @map("horario_fim") @db.Time(0)
+  usuarioId      Int      @map("usuario_id")
+
+  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@map("compromissos")
+}
