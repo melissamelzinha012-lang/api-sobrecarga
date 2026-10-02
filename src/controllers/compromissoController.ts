@@ -5,6 +5,11 @@ import { CompromissoRepository } from "../repositories/compromissoRepository";
 const compromissoRepository = new CompromissoRepository();
 
 export class CompromissoController {
+
+  async novo(req: Request, res: Response) {
+    return res.render("compromissos/novo");
+  }
+
   async listar(req: Request, res: Response) {
     try {
       const compromissos = await compromissoRepository.listarTodos();
@@ -53,7 +58,7 @@ export class CompromissoController {
         return res.status(400).send("Preencha todos os campos");
       }
 
-      const compromisso = await compromissoRepository.criar(
+      await compromissoRepository.criar(
         titulo,
         data,
         horarioInicio,
@@ -61,7 +66,8 @@ export class CompromissoController {
         Number(usuarioId)
       );
 
-      return res.status(201).json(compromisso);
+      return res.redirect("/compromissos");
+
     } catch (error) {
       console.error("Erro ao criar compromisso:", error);
       return res.status(500).send("Erro ao criar compromisso");
@@ -71,6 +77,7 @@ export class CompromissoController {
   async atualizar(req: Request, res: Response) {
     try {
       const id = Number(req.params.id);
+
       const {
         titulo,
         data,
@@ -95,6 +102,7 @@ export class CompromissoController {
       );
 
       return res.json(compromisso);
+
     } catch (error) {
       console.error("Erro ao atualizar compromisso:", error);
       return res.status(500).send("Erro ao atualizar compromisso");
@@ -114,6 +122,7 @@ export class CompromissoController {
       return res.json({
         mensagem: "Compromisso excluído com sucesso"
       });
+
     } catch (error) {
       console.error("Erro ao excluir compromisso:", error);
       return res.status(500).send("Erro ao excluir compromisso");

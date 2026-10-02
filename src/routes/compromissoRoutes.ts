@@ -1,4 +1,3 @@
-
 import { Router } from "express";
 
 import { CompromissoController } from "../controllers/compromissoController";
@@ -6,6 +5,11 @@ import { CompromissoController } from "../controllers/compromissoController";
 const router = Router();
 
 const compromissoController = new CompromissoController();
+
+router.get(
+  "/novo",
+  compromissoController.novo.bind(compromissoController)
+);
 
 router.get(
   "/",
