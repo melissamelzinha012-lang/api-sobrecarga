@@ -4,6 +4,7 @@ import session from 'express-session';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.routes';
 import dashboardRoutes from "./routes/dashboardRoutes";
+import compromissoRoutes from './routes/compromissoRoutes';
 
 dotenv.config();
 
@@ -28,7 +29,7 @@ app.use(session({
 }));
 app.use('/auth', authRoutes);
 app.use('/dashboard', dashboardRoutes);
-
+app.use('/compromissos', compromissoRoutes);
 export default app;
   
 
