@@ -1,33 +1,25 @@
-import { pool } from '../config/database/database';
+import { prisma } from '../config/database/prisma';
 
 export class UsuarioRepository {
-
   async buscarPorEmail(email: string) {
-    const [rows] = await pool.query(
-      'SELECT * FROM usuarios WHERE email = ?',
-      [email]
-    );
-
-    const usuarios = rows as any[];
-
-    return usuarios[0] || null;
+    return prisma.usuario.findUnique({
+      where: { email }
+    });
   }
 
   async criar(
     nome: string,
     email: string,
     senhaHash: string,
-    perfil: string = 'usuario'
+    perfil = 'usuario'
   ) {
-    const [result] = await pool.query(
-      `
-      INSERT INTO usuarios
-      (nome, email, senha_hash, perfil)
-      VALUES (?, ?, ?, ?)
-      `,
-      [nome, email, senhaHash, perfil]
-    );
-
-    return result;
+    return prisma.usuario.create({
+      data: {
+        nome,
+        email,
+        senhaHash,
+        perfil
+      }
+    });
   }
 }

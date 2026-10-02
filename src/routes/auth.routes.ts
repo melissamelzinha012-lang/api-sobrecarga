@@ -52,10 +52,7 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    const senhaValida = await bcrypt.compare(
-      senha,
-      usuario.senha_hash
-    );
+    const senhaValida = await bcrypt.compare(senha, usuario.senhaHash);
 
     if (!senhaValida) {
       return res.status(401).json({
@@ -67,7 +64,7 @@ router.post("/login", async (req, res) => {
       id: usuario.id,
       nome: usuario.nome,
       email: usuario.email,
-      perfil: usuario.perfil
+      perfil: usuario.perfil as any
     };
 
     return res.status(200).json({
