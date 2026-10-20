@@ -1,9 +1,12 @@
 
+
+
 import { prisma } from "../config/database/prisma";
 
 export class CompromissoRepository {
-  async listarTodos() {
+  async listarTodos(usuarioId: number) {
     return await prisma.compromisso.findMany({
+      where: { usuarioId },
       orderBy: [
         { data: "asc" },
         { horarioInicio: "asc" },
@@ -11,9 +14,12 @@ export class CompromissoRepository {
     });
   }
 
-  async buscarPorId(id: number) {
-    return await prisma.compromisso.findUnique({
-      where: { id },
+  async buscarPorId(id: number, usuarioId: number) {
+    return await prisma.compromisso.findFirst({
+      where: {
+        id,
+        usuarioId,
+      },
     });
   }
 
@@ -35,27 +41,39 @@ export class CompromissoRepository {
     });
   }
 
+  // Commit 36: editar compromisso existente
   async atualizar(
     id: number,
     titulo: string,
     data: string,
     horarioInicio: string,
-    horarioFim: string
+    horarioFim: string,
+    usuarioId: number
   ) {
-    return await prisma.compromisso.update({
-      where: { id },
+    return await prisma.compromisso.updateMany({
+      where: {
+        id,
+        usuarioId,
+      },
       data: {
         titulo,
         data: new Date(`${data}T12:00:00`),
-        horarioInicio: new Date(`1970-01-01T${horarioInicio}:00`),
-        horarioFim: new Date(`1970-01-01T${horarioFim}:00`),
+        horarioInicio: new Date(
+          `1970-01-01T${horarioInicio}:00`
+        ),
+        horarioFim: new Date(
+          `1970-01-01T${horarioFim}:00`
+        ),
       },
     });
   }
 
-  async excluir(id: number) {
-    return await prisma.compromisso.delete({
-      where: { id },
+  async excluir(id: number, usuarioId: number) {
+    return await prisma.compromisso.deleteMany({
+      where: {
+        id,
+        usuarioId,
+      },
     });
   }
 }
