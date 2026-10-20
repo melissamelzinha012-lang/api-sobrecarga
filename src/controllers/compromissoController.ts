@@ -1,4 +1,3 @@
-
 import { Request, Response } from "express";
 import { CompromissoRepository } from "../repositories/compromissoRepository";
 
@@ -9,7 +8,7 @@ export class CompromissoController {
   async novo(req: Request, res: Response) {
     const usuarioId = Number(req.session.usuario?.id);
 
-    if (!usuarioId || !Number.isInteger(usuarioId)) {
+    if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
       return res.redirect("/auth/login");
     }
 
@@ -20,7 +19,7 @@ export class CompromissoController {
     try {
       const usuarioId = Number(req.session.usuario?.id);
 
-      if (!usuarioId || !Number.isInteger(usuarioId)) {
+      if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
         return res.redirect("/auth/login");
       }
 
@@ -41,7 +40,7 @@ export class CompromissoController {
       const usuarioId = Number(req.session.usuario?.id);
       const id = Number(req.params.id);
 
-      if (!usuarioId || !Number.isInteger(usuarioId)) {
+      if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
         return res.redirect("/auth/login");
       }
 
@@ -67,7 +66,7 @@ export class CompromissoController {
     try {
       const usuarioId = Number(req.session.usuario?.id);
 
-      if (!usuarioId || !Number.isInteger(usuarioId)) {
+      if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
         return res.redirect("/auth/login");
       }
 
@@ -80,6 +79,15 @@ export class CompromissoController {
 
       if (!titulo || !data || !horarioInicio || !horarioFim) {
         return res.status(400).send("Preencha todos os campos");
+      }
+
+      const formatoHorario = /^([01]\d|2[0-3]):[0-5]\d$/;
+
+      if (
+        !formatoHorario.test(horarioInicio) ||
+        !formatoHorario.test(horarioFim)
+      ) {
+        return res.status(400).send("Formato de horário inválido");
       }
 
       if (horarioInicio >= horarioFim) {
@@ -108,7 +116,7 @@ export class CompromissoController {
       const usuarioId = Number(req.session.usuario?.id);
       const id = Number(req.params.id);
 
-      if (!usuarioId || !Number.isInteger(usuarioId)) {
+      if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
         return res.redirect("/auth/login");
       }
 
@@ -125,6 +133,15 @@ export class CompromissoController {
 
       if (!titulo || !data || !horarioInicio || !horarioFim) {
         return res.status(400).send("Preencha todos os campos");
+      }
+
+      const formatoHorario = /^([01]\d|2[0-3]):[0-5]\d$/;
+
+      if (
+        !formatoHorario.test(horarioInicio) ||
+        !formatoHorario.test(horarioFim)
+      ) {
+        return res.status(400).send("Formato de horário inválido");
       }
 
       if (horarioInicio >= horarioFim) {
@@ -161,7 +178,7 @@ export class CompromissoController {
       const usuarioId = Number(req.session.usuario?.id);
       const id = Number(req.params.id);
 
-      if (!usuarioId || !Number.isInteger(usuarioId)) {
+      if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
         return res.redirect("/auth/login");
       }
 
