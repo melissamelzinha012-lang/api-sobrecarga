@@ -1,3 +1,4 @@
+
 import { Request, Response } from "express";
 import { CompromissoRepository } from "../repositories/compromissoRepository";
 
@@ -27,7 +28,7 @@ export class CompromissoController {
         await compromissoRepository.listarTodos(usuarioId);
 
       return res.render("compromissos/index", {
-        compromissos
+        compromissos,
       });
     } catch (error) {
       console.error("Erro ao listar compromissos:", error);
@@ -74,7 +75,7 @@ export class CompromissoController {
         titulo,
         data,
         horarioInicio,
-        horarioFim
+        horarioFim,
       } = req.body;
 
       if (!titulo || !data || !horarioInicio || !horarioFim) {
@@ -128,7 +129,7 @@ export class CompromissoController {
         titulo,
         data,
         horarioInicio,
-        horarioFim
+        horarioFim,
       } = req.body;
 
       if (!titulo || !data || !horarioInicio || !horarioFim) {
@@ -165,7 +166,7 @@ export class CompromissoController {
       }
 
       return res.json({
-        mensagem: "Compromisso atualizado com sucesso"
+        mensagem: "Compromisso atualizado com sucesso",
       });
     } catch (error) {
       console.error("Erro ao atualizar compromisso:", error);
@@ -194,7 +195,7 @@ export class CompromissoController {
       }
 
       return res.json({
-        mensagem: "Compromisso excluído com sucesso"
+        mensagem: "Compromisso excluído com sucesso",
       });
     } catch (error) {
       console.error("Erro ao excluir compromisso:", error);

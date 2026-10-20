@@ -1,9 +1,12 @@
+
 import { prisma } from "../config/database/prisma";
 
 export class CompromissoRepository {
   async listarTodos(usuarioId: number) {
     return await prisma.compromisso.findMany({
-      where: { usuarioId },
+      where: {
+        usuarioId,
+      },
       orderBy: [
         { data: "asc" },
         { horarioInicio: "asc" },
@@ -28,9 +31,11 @@ export class CompromissoRepository {
     ignorarId?: number
   ) {
     const dataCompromisso = new Date(`${data}T12:00:00`);
+
     const inicio = new Date(
       `1970-01-01T${horarioInicio}:00`
     );
+
     const fim = new Date(
       `1970-01-01T${horarioFim}:00`
     );
@@ -101,6 +106,18 @@ export class CompromissoRepository {
     horarioFim: string,
     usuarioId: number
   ) {
+    // Confirma que o compromisso pertence ao usuário.
+    const compromissoExistente = await this.buscarPorId(
+      id,
+      usuarioId
+    );
+
+    if (!compromissoExistente) {
+      return { count: 0 };
+    }
+
+    // Verifica sobreposição somente entre compromissos
+    // do mesmo usuário e ignora o compromisso atual.
     const sobreposicao = await this.existeSobreposicao(
       data,
       horarioInicio,
