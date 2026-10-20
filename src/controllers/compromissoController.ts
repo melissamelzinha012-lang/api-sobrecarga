@@ -7,12 +7,25 @@ const compromissoRepository = new CompromissoRepository();
 export class CompromissoController {
 
   async novo(req: Request, res: Response) {
+    const usuarioId = Number(req.session.usuario?.id);
+
+    if (!usuarioId || !Number.isInteger(usuarioId)) {
+      return res.redirect("/auth/login");
+    }
+
     return res.render("compromissos/novo");
   }
 
   async listar(req: Request, res: Response) {
     try {
-      const compromissos = await compromissoRepository.listarTodos();
+      const usuarioId = Number(req.session.usuario?.id);
+
+      if (!usuarioId || !Number.isInteger(usuarioId)) {
+        return res.redirect("/auth/login");
+      }
+
+      const compromissos =
+        await compromissoRepository.listarTodos(usuarioId);
 
       return res.render("compromissos/index", {
         compromissos
@@ -25,13 +38,19 @@ export class CompromissoController {
 
   async buscarPorId(req: Request, res: Response) {
     try {
+      const usuarioId = Number(req.session.usuario?.id);
       const id = Number(req.params.id);
+
+      if (!usuarioId || !Number.isInteger(usuarioId)) {
+        return res.redirect("/auth/login");
+      }
 
       if (!Number.isInteger(id) || id <= 0) {
         return res.status(400).send("ID inválido");
       }
 
-      const compromisso = await compromissoRepository.buscarPorId(id);
+      const compromisso =
+        await compromissoRepository.buscarPorId(id, usuarioId);
 
       if (!compromisso) {
         return res.status(404).send("Compromisso não encontrado");
@@ -46,16 +65,27 @@ export class CompromissoController {
 
   async criar(req: Request, res: Response) {
     try {
+      const usuarioId = Number(req.session.usuario?.id);
+
+      if (!usuarioId || !Number.isInteger(usuarioId)) {
+        return res.redirect("/auth/login");
+      }
+
       const {
         titulo,
         data,
         horarioInicio,
-        horarioFim,
-        usuarioId
+        horarioFim
       } = req.body;
 
-      if (!titulo || !data || !horarioInicio || !horarioFim || !usuarioId) {
+      if (!titulo || !data || !horarioInicio || !horarioFim) {
         return res.status(400).send("Preencha todos os campos");
+      }
+
+      if (horarioInicio >= horarioFim) {
+        return res.status(400).send(
+          "O horário de início deve ser anterior ao horário de fim"
+        );
       }
 
       await compromissoRepository.criar(
@@ -63,11 +93,10 @@ export class CompromissoController {
         data,
         horarioInicio,
         horarioFim,
-        Number(usuarioId)
+        usuarioId
       );
 
       return res.redirect("/compromissos");
-
     } catch (error) {
       console.error("Erro ao criar compromisso:", error);
       return res.status(500).send("Erro ao criar compromisso");
@@ -76,7 +105,16 @@ export class CompromissoController {
 
   async atualizar(req: Request, res: Response) {
     try {
+      const usuarioId = Number(req.session.usuario?.id);
       const id = Number(req.params.id);
+
+      if (!usuarioId || !Number.isInteger(usuarioId)) {
+        return res.redirect("/auth/login");
+      }
+
+      if (!Number.isInteger(id) || id <= 0) {
+        return res.status(400).send("ID inválido");
+      }
 
       const {
         titulo,
@@ -85,24 +123,33 @@ export class CompromissoController {
         horarioFim
       } = req.body;
 
-      if (!Number.isInteger(id) || id <= 0) {
-        return res.status(400).send("ID inválido");
-      }
-
       if (!titulo || !data || !horarioInicio || !horarioFim) {
         return res.status(400).send("Preencha todos os campos");
       }
 
-      const compromisso = await compromissoRepository.atualizar(
-        id,
-        titulo,
-        data,
-        horarioInicio,
-        horarioFim
-      );
+      if (horarioInicio >= horarioFim) {
+        return res.status(400).send(
+          "O horário de início deve ser anterior ao horário de fim"
+        );
+      }
 
-      return res.json(compromisso);
+      const resultado =
+        await compromissoRepository.atualizar(
+          id,
+          titulo,
+          data,
+          horarioInicio,
+          horarioFim,
+          usuarioId
+        );
 
+      if (resultado.count === 0) {
+        return res.status(404).send("Compromisso não encontrado");
+      }
+
+      return res.json({
+        mensagem: "Compromisso atualizado com sucesso"
+      });
     } catch (error) {
       console.error("Erro ao atualizar compromisso:", error);
       return res.status(500).send("Erro ao atualizar compromisso");
@@ -111,18 +158,27 @@ export class CompromissoController {
 
   async excluir(req: Request, res: Response) {
     try {
+      const usuarioId = Number(req.session.usuario?.id);
       const id = Number(req.params.id);
+
+      if (!usuarioId || !Number.isInteger(usuarioId)) {
+        return res.redirect("/auth/login");
+      }
 
       if (!Number.isInteger(id) || id <= 0) {
         return res.status(400).send("ID inválido");
       }
 
-      await compromissoRepository.excluir(id);
+      const resultado =
+        await compromissoRepository.excluir(id, usuarioId);
+
+      if (resultado.count === 0) {
+        return res.status(404).send("Compromisso não encontrado");
+      }
 
       return res.json({
         mensagem: "Compromisso excluído com sucesso"
       });
-
     } catch (error) {
       console.error("Erro ao excluir compromisso:", error);
       return res.status(500).send("Erro ao excluir compromisso");

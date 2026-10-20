@@ -1,79 +1,165 @@
+import { Request, Response } from "express";
+import { CompromissoRepository } from "../repositories/compromissoRepository";
 
+const compromissoRepository = new CompromissoRepository();
 
+export class CompromissoController {
 
-import { prisma } from "../config/database/prisma";
-
-export class CompromissoRepository {
-  async listarTodos(usuarioId: number) {
-    return await prisma.compromisso.findMany({
-      where: { usuarioId },
-      orderBy: [
-        { data: "asc" },
-        { horarioInicio: "asc" },
-      ],
-    });
+  async novo(req: Request, res: Response) {
+    return res.render("compromissos/novo");
   }
 
-  async buscarPorId(id: number, usuarioId: number) {
-    return await prisma.compromisso.findFirst({
-      where: {
-        id,
-        usuarioId,
-      },
-    });
+  async listar(req: Request, res: Response) {
+    try {
+      const usuarioId = Number(req.session.usuarioId);
+
+      if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
+        return res.redirect("/auth/login");
+      }
+
+      const compromissos =
+        await compromissoRepository.listarTodos(usuarioId);
+
+      return res.render("compromissos/index", {
+        compromissos
+      });
+    } catch (error) {
+      console.error("Erro ao listar compromissos:", error);
+      return res.status(500).send("Erro ao listar compromissos");
+    }
   }
 
-  async criar(
-    titulo: string,
-    data: string,
-    horarioInicio: string,
-    horarioFim: string,
-    usuarioId: number
-  ) {
-    return await prisma.compromisso.create({
-      data: {
+  async buscarPorId(req: Request, res: Response) {
+    try {
+      const id = Number(req.params.id);
+      const usuarioId = Number(req.session.usuarioId);
+
+      if (!Number.isInteger(id) || id <= 0) {
+        return res.status(400).send("ID inválido");
+      }
+
+      if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
+        return res.redirect("/auth/login");
+      }
+
+      const compromisso =
+        await compromissoRepository.buscarPorId(id, usuarioId);
+
+      if (!compromisso) {
+        return res.status(404).send("Compromisso não encontrado");
+      }
+
+      return res.json(compromisso);
+    } catch (error) {
+      console.error("Erro ao buscar compromisso:", error);
+      return res.status(500).send("Erro ao buscar compromisso");
+    }
+  }
+
+  async criar(req: Request, res: Response) {
+    try {
+      const {
         titulo,
-        data: new Date(`${data}T12:00:00`),
-        horarioInicio: new Date(`1970-01-01T${horarioInicio}:00`),
-        horarioFim: new Date(`1970-01-01T${horarioFim}:00`),
-        usuarioId,
-      },
-    });
-  }
+        data,
+        horarioInicio,
+        horarioFim
+      } = req.body;
 
-  // Commit 36: editar compromisso existente
-  async atualizar(
-    id: number,
-    titulo: string,
-    data: string,
-    horarioInicio: string,
-    horarioFim: string,
-    usuarioId: number
-  ) {
-    return await prisma.compromisso.updateMany({
-      where: {
-        id,
-        usuarioId,
-      },
-      data: {
+      const usuarioId = Number(req.session.usuarioId);
+
+      if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
+        return res.redirect("/auth/login");
+      }
+
+      if (!titulo || !data || !horarioInicio || !horarioFim) {
+        return res.status(400).send("Preencha todos os campos");
+      }
+
+      await compromissoRepository.criar(
         titulo,
-        data: new Date(`${data}T12:00:00`),
-        horarioInicio: new Date(
-          `1970-01-01T${horarioInicio}:00`
-        ),
-        horarioFim: new Date(
-          `1970-01-01T${horarioFim}:00`
-        ),
-      },
-    });
+        data,
+        horarioInicio,
+        horarioFim,
+        usuarioId
+      );
+
+      return res.redirect("/compromissos");
+    } catch (error) {
+      console.error("Erro ao criar compromisso:", error);
+      return res.status(500).send("Erro ao criar compromisso");
+    }
   }
 
-  async excluir(id: number, usuarioId: number) {
-    return await prisma.compromisso.deleteMany({
-      where: {
+  async atualizar(req: Request, res: Response) {
+    try {
+      const id = Number(req.params.id);
+      const usuarioId = Number(req.session.usuarioId);
+
+      const {
+        titulo,
+        data,
+        horarioInicio,
+        horarioFim
+      } = req.body;
+
+      if (!Number.isInteger(id) || id <= 0) {
+        return res.status(400).send("ID inválido");
+      }
+
+      if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
+        return res.redirect("/auth/login");
+      }
+
+      if (!titulo || !data || !horarioInicio || !horarioFim) {
+        return res.status(400).send("Preencha todos os campos");
+      }
+
+      const resultado = await compromissoRepository.atualizar(
         id,
-        usuarioId,
-      },
-    });
+        titulo,
+        data,
+        horarioInicio,
+        horarioFim,
+        usuarioId
+      );
+
+      if (resultado.count === 0) {
+        return res.status(404).send("Compromisso não encontrado");
+      }
+
+      return res.redirect("/compromissos");
+    } catch (error) {
+      console.error("Erro ao atualizar compromisso:", error);
+      return res.status(500).send("Erro ao atualizar compromisso");
+    }
+  }
+
+  async excluir(req: Request, res: Response) {
+    try {
+      const id = Number(req.params.id);
+      const usuarioId = Number(req.session.usuarioId);
+
+      if (!Number.isInteger(id) || id <= 0) {
+        return res.status(400).send("ID inválido");
+      }
+
+      if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
+        return res.redirect("/auth/login");
+      }
+
+      const resultado = await compromissoRepository.excluir(
+        id,
+        usuarioId
+      );
+
+      if (resultado.count === 0) {
+        return res.status(404).send("Compromisso não encontrado");
+      }
+
+      return res.redirect("/compromissos");
+    } catch (error) {
+      console.error("Erro ao excluir compromisso:", error);
+      return res.status(500).send("Erro ao excluir compromisso");
+    }
   }
 }
