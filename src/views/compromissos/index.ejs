@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Compromissos | Sobrecarga</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f3fa;
+            color: #29243a;
+        }
+
+        header {
+            background: #6d4bc3;
+            color: white;
+            padding: 30px;
+        }
+
+        header h1 {
+            margin-bottom: 8px;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .topo h2 {
+            color: #6d4bc3;
+        }
+
+        .botao {
+            background: #6d4bc3;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px #00000010;
+        }
+
+        .card h3 {
+            color: #6d4bc3;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .acoes {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .excluir {
+            background: #c94c4c;
+        }
+
+        .vazio {
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .topo {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+
+            .topo .botao {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1> Compromissos</h1>
+        <p>Organize seus horários e compromissos.</p>
+    </header>
+
+    <main>
+
+        <div class="topo">
+
+            <h2>Meus compromissos</h2>
+
+            <a href="/compromissos/novo" class="botao">
+                + Novo compromisso
+            </a>
+
+        </div>
+
+
+        <% if (compromissos.length === 0) { %>
+
+            <div class="card vazio">
+
+                <p>Nenhum compromisso cadastrado.</p>
+
+            </div>
+
+        <% } else { %>
+
+
+            <% compromissos.forEach(compromisso => { %>
+
+                <div class="card">
+
+                    <h3>
+                        <%= compromisso.titulo %>
+                    </h3>
+
+                    <p>
+                        <strong>Data:</strong>
+                        <%= compromisso.data %>
+                    </p>
+
+                    <p>
+                        <strong> Horário:</strong>
+                        <%= compromisso.horarioInicio %>
+                        -
+                        <%= compromisso.horarioFim %>
+                    </p>
+
+
+                    <div class="acoes">
+
+                        <a
+                            href="/compromissos/<%= compromisso.id %>/editar"
+                            class="botao"
+                        >
+                            Editar
+                        </a>
+
+
+                        <form
+                            action="/compromissos/<%= compromisso.id %>/excluir"
+                            method="POST"
+                        >
+
+                            <button
+                                type="submit"
+                                class="botao excluir"
+                            >
+                                Excluir
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            <% }) %>
+
+
+        <% } %>
+
+    </main>
+
+</body>
+
+</html>

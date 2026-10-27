@@ -1,0 +1,490 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+
+:root {
+    --fundo: #dce5f1;
+    --painel: #f9f8fc;
+    --menu: #e8edf5;
+    --card: #ffffff;
+    --azul: #6687bd;
+    --azul-escuro: #3f6098;
+    --azul-claro: #e2ebf8;
+    --lilas: #ece8f4;
+    --texto: #303c52;
+    --texto-suave: #8791a3;
+    --borda: #e5e9f1;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--texto);
+    background: linear-gradient(135deg, #d5e0ef, #e9e4ef);
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button, input, select, textarea {
+    font: inherit;
+}
+
+h1, h2, h3 {
+    font-family: 'Manrope', sans-serif;
+}
+
+/* PAINEL PRINCIPAL */
+
+.dashboard-shell {
+    width: min(1400px, calc(100% - 60px));
+    min-height: calc(100vh - 60px);
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    background: var(--painel);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 12px 35px #35496812;
+}
+
+/* MENU LATERAL */
+
+.sidebar {
+    background: var(--menu);
+    padding: 30px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.brand {
+    padding: 0 10px;
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--azul-escuro);
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 8px;
+}
+
+.profile-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #d0def2;
+    color: var(--azul-escuro);
+    font-size: 20px;
+}
+
+.profile strong,
+.profile small {
+    display: block;
+}
+
+.profile strong {
+    font-size: 13px;
+}
+
+.profile small {
+    color: var(--texto-suave);
+    font-size: 11px;
+}
+
+.side-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.side-nav a,
+.logout-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    color: #68758b;
+    font-size: 13px;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.side-nav a:hover,
+.side-nav a.active {
+    background: white;
+    color: var(--azul-escuro);
+}
+
+.side-icon {
+    width: 20px;
+    text-align: center;
+    font-size: 17px;
+}
+
+.logout-link {
+    margin-top: auto;
+}
+
+/* CONTEÚDO */
+
+.dashboard-content {
+    min-width: 0;
+    padding: 30px;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.welcome h1 {
+    font-size: clamp(21px, 2vw, 29px);
+    letter-spacing: -1px;
+}
+
+.welcome p {
+    margin-top: 7px;
+    color: var(--texto-suave);
+    font-size: 13px;
+}
+
+.topbar-tools {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.search-box {
+    padding: 10px 16px;
+    min-width: 210px;
+    border: 1px solid var(--borda);
+    border-radius: 30px;
+    background: white;
+    color: var(--texto-suave);
+    font-size: 12px;
+}
+
+.tool-circle {
+    width: 37px;
+    height: 37px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--azul-claro);
+    color: var(--azul-escuro);
+}
+
+/* CARDS DO DASHBOARD */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) 180px;
+    gap: 15px;
+    align-items: stretch;
+}
+
+.card {
+    min-width: 0;
+    padding: 18px;
+    background: var(--card);
+    border: 1px solid var(--borda);
+    border-radius: 18px;
+    box-shadow: 0 4px 15px #35496808;
+}
+
+.card h2 {
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.card p {
+    color: var(--texto-suave);
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+.card-item {
+    padding: 12px;
+    margin-bottom: 9px;
+    background: #f4f6fa;
+    border-left: 3px solid #9bb5df;
+    border-radius: 10px;
+}
+
+.card-item strong {
+    color: var(--texto);
+    font-size: 13px;
+}
+
+.card-item p:last-child {
+    margin-bottom: 0;
+}
+
+.empty-state {
+    padding: 13px;
+    border-radius: 10px;
+    background: #f4f6fa;
+}
+
+.card-commitments { grid-column: 1; }
+.card-exams { grid-column: 2; }
+.card-tasks { grid-column: 1; }
+.card-studies { grid-column: 2; }
+
+.card-alerts {
+    grid-column: 1 / 3;
+    background: #f6f3fa;
+}
+
+.card-alerts h2 {
+    color: #77659a;
+}
+
+.card-shortcuts {
+    grid-column: 3;
+    grid-row: 1 / 4;
+    background: var(--lilas);
+}
+
+.atalhos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.atalhos a {
+    display: block;
+    padding: 12px;
+    background: white;
+    border-radius: 10px;
+    color: var(--azul-escuro);
+    font-size: 12px;
+    font-weight: 700;
+    transition: .2s;
+}
+
+.atalhos a:hover {
+    background: var(--azul-claro);
+    transform: translateY(-2px);
+}
+
+/* LOGIN */
+
+.auth-page {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+}
+
+.auth-card {
+    width: min(430px, 100%);
+    padding: 38px;
+    background: var(--painel);
+    border: 1px solid #ffffff;
+    border-radius: 23px;
+    box-shadow: 0 15px 45px #35496818;
+}
+
+.auth-brand {
+    margin-bottom: 12px;
+    color: var(--azul-escuro);
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.auth-card h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.auth-intro {
+    color: var(--texto-suave);
+    font-size: 13px;
+    margin-bottom: 25px;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.field label {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.field input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    background: white;
+    outline: none;
+}
+
+.field input:focus {
+    border-color: var(--azul);
+    box-shadow: 0 0 0 3px #6687bd20;
+}
+
+.auth-form button {
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    background: var(--azul);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.auth-form button:hover {
+    background: var(--azul-escuro);
+}
+
+.auth-foot {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--texto-suave);
+}
+
+.auth-foot a {
+    color: var(--azul-escuro);
+    font-weight: 700;
+}
+
+.mensagem {
+    display: none;
+    padding: 10px;
+    margin-bottom: 14px;
+    border-radius: 9px;
+    font-size: 13px;
+}
+
+.mensagem.erro {
+    display: block;
+    background: #f9e2e5;
+    color: #8a3541;
+}
+
+.mensagem.sucesso {
+    display: block;
+    background: #e0f2e9;
+    color: #28634e;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 1050px) {
+    .dashboard-shell {
+        grid-template-columns: 185px minmax(0, 1fr);
+        width: calc(100% - 30px);
+        margin: 15px auto;
+    }
+
+    .dashboard-content {
+        padding: 22px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card-commitments,
+    .card-exams,
+    .card-tasks,
+    .card-studies,
+    .card-alerts,
+    .card-shortcuts {
+        grid-column: auto;
+        grid-row: auto;
+    }
+
+    .card-alerts,
+    .card-shortcuts {
+        grid-column: 1 / -1;
+    }
+
+    .atalhos {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+    .dashboard-shell {
+        display: block;
+        width: calc(100% - 16px);
+        margin: 8px auto;
+    }
+
+    .sidebar {
+        padding: 18px;
+        gap: 15px;
+    }
+
+    .profile,
+    .logout-link {
+        display: none;
+    }
+
+    .side-nav {
+        flex-direction: row;
+        overflow-x: auto;
+    }
+
+    .side-nav a {
+        white-space: nowrap;
+    }
+
+    .dashboard-content {
+        padding: 17px;
+    }
+
+    .topbar-tools {
+        display: none;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card-alerts,
+    .card-shortcuts {
+        grid-column: auto;
+    }
+
+    .atalhos {
+        display: flex;
+    }
+
+    .auth-card {
+        padding: 27px 22px;
+    }
+}
