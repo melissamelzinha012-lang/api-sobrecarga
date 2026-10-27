@@ -1,0 +1,181 @@
+:root {
+    font-family: Inter, Arial, sans-serif;
+    color: #18233b;
+    background: #f4f7fc;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+  }
+  
+  .topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px max(5%, calc((100% - 1080px) / 2));
+    background: #fff;
+    border-bottom: 1px solid #e4eaf4;
+  }
+  
+  .marca {
+    color: #3159d9;
+    font-size: 21px;
+    font-weight: 800;
+    text-decoration: none;
+  }
+  
+  .topo span {
+    color: #66718a;
+    font-size: 14px;
+  }
+  
+  .container {
+    width: min(100% - 32px, 900px);
+    margin: 38px auto;
+  }
+  
+  .introducao {
+    margin-bottom: 26px;
+  }
+  
+  .etiqueta {
+    color: #3159d9;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+  }
+  
+  h1 {
+    margin: 10px 0;
+    font-size: clamp(28px, 5vw, 42px);
+    letter-spacing: -1px;
+  }
+  
+  .introducao > p:last-child {
+    color: #68758c;
+    line-height: 1.7;
+  }
+  
+  .painel {
+    margin: 20px 0;
+    padding: 25px;
+    background: white;
+    border: 1px solid #e6ebf4;
+    border-radius: 18px;
+    box-shadow: 0 8px 28px #1a32600a;
+  }
+  
+  h2 {
+    margin-top: 0;
+    font-size: 21px;
+  }
+  
+  form {
+    display: grid;
+    gap: 10px;
+  }
+  
+  label {
+    margin-top: 8px;
+    color: #46536d;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  input {
+    width: 100%;
+    min-width: 0;
+    padding: 12px 13px;
+    border: 1px solid #d8dfec;
+    border-radius: 9px;
+    font: inherit;
+  }
+  
+  input:focus {
+    outline: 2px solid #9db5ff;
+    border-color: #3159d9;
+  }
+  
+  button {
+    padding: 12px 16px;
+    border: 0;
+    border-radius: 9px;
+    background: #3159d9;
+    color: white;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  
+  form button {
+    margin-top: 12px;
+  }
+  
+  button:hover {
+    filter: brightness(0.94);
+  }
+  
+  .acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  
+  .acoes button {
+    background: #edf1ff;
+    color: #3150b6;
+  }
+  
+  .sessao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid #edf0f6;
+  }
+  
+  .sessao:last-child {
+    border-bottom: 0;
+  }
+  
+  .sessao p {
+    margin: 6px 0;
+    color: #68758c;
+    font-size: 14px;
+  }
+  
+  .sessao.concluido strong {
+    color: #168052;
+  }
+  
+  #mensagem {
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+  
+  @media (max-width: 540px) {
+    .topo {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  
+    .container {
+      margin-top: 24px;
+    }
+  
+    .painel {
+      padding: 18px;
+    }
+  
+    .sessao {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }

@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
+<<<<<<< HEAD
 import repository from "../repositories/provaTrabalhoRepository";
+=======
+import repository from "../repositories/ProvaTrabalhoRepository";
+>>>>>>> e74588f921c0bc25427fe78e73d0980303bb59b0
 
 class ProvaTrabalhoController {
   async listar(req: Request, res: Response) {
@@ -116,4 +120,8 @@ class ProvaTrabalhoController {
   }
 }
 
+<<<<<<< HEAD
 export default new ProvaTrabalhoController();
+=======
+export default new ProvaTrabalhoController();
+>>>>>>> e74588f921c0bc25427fe78e73d0980303bb59b0

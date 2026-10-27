@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Área Ponte | Rotina de estudos</title>
+  <link rel="stylesheet" href="/css/area-ponte.css">
+  <script src="/js/area-ponte.js" defer></script>
+</head>
+<body>
+  <header class="topo">
+    <a href="/dashboard" class="marca">Área Ponte</a>
+    <span>Minha rotina de estudos</span>
+  </header>
+
+  <main class="container">
+    <section class="introducao">
+      <p class="etiqueta">ORGANIZAÇÃO INTELIGENTE</p>
+      <h1>Seus estudos, no seu ritmo.</h1>
+      <p>Organize suas sessões, respeite seus compromissos e acompanhe seu progresso.</p>
+    </section>
+
+    <section class="painel">
+      <h2>Planejar estudos</h2>
+
+      <form id="form-estudo">
+        <label for="usuarioId">ID do usuário</label>
+        <input id="usuarioId" name="usuarioId" type="number"
+               min="1" required>
+
+        <label for="materia">Matéria</label>
+        <input id="materia" name="materia" type="text"
+               placeholder="Ex.: Matemática" required>
+
+        <label for="prazo">Prazo final</label>
+        <input id="prazo" name="prazo" type="datetime-local" required>
+
+        <label for="duracaoMinutos">Tempo total (minutos)</label>
+        <input id="duracaoMinutos" name="duracaoMinutos"
+               type="number" min="1" max="10000" value="150" required>
+
+        <button type="submit">Gerar rotina</button>
+      </form>
+
+      <div class="acoes">
+        <button id="btn-listar" type="button">Atualizar estudos</button>
+        <button id="btn-reorganizar" type="button">Reorganizar pendentes</button>
+      </div>
+
+      <p id="mensagem" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="painel">
+      <h2>Minhas sessões</h2>
+      <div id="lista-estudos">
+        <p>Informe seu ID e clique em “Atualizar estudos”.</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
