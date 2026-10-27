@@ -1,132 +1,57 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-<<<<<<< HEAD
+    <title>Login | MinhaRotina</title>
     <link rel="stylesheet" href="/css/style.css">
-=======
->>>>>>> e74588f921c0bc25427fe78e73d0980303bb59b0
-
-    <style>
-        .mensagem {
-            display: none;
-            padding: 10px;
-            margin: 15px 0;
-            border-radius: 4px;
-        }
-
-        .mensagem.erro {
-            display: block;
-            color: #842029;
-            background-color: #f8d7da;
-        }
-
-        .mensagem.sucesso {
-            display: block;
-            color: #0f5132;
-            background-color: #d1e7dd;
-        }
-    </style>
 </head>
-<<<<<<< HEAD
-<body class="login-page">
-=======
-<body>
->>>>>>> e74588f921c0bc25427fe78e73d0980303bb59b0
+<body class="auth-page">
 
-    <h1>Login</h1>
+    <main class="auth-card">
+        <p class="auth-brand">MinhaRotina</p>
 
-    <div id="mensagem" class="mensagem"></div>
+        <h1>Boas-vindas!</h1>
+        <p class="auth-intro">
+            Entre na sua conta para organizar seus estudos e compromissos.
+        </p>
 
-    <form id="form-login">
-        <div>
-            <label for="email">E-mail:</label>
+        <div id="mensagem" class="mensagem"></div>
 
-            <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Digite seu e-mail"
-                required
-            >
-        </div>
+        <form id="form-login" class="auth-form">
+            <div class="field">
+                <label for="email">E-mail</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Digite seu e-mail"
+                    required
+                >
+            </div>
 
-          
+            <div class="field">
+                <label for="senha">Senha</label>
+                <input
+                    type="password"
+                    id="senha"
+                    name="senha"
+                    placeholder="Digite sua senha"
+                    required
+                >
+            </div>
 
+            <button type="submit">Entrar na minha conta</button>
+        </form>
 
-        <div>
-            <label for="senha">Senha:</label>
+        <p class="auth-foot">
+            Organize sua rotina com facilidade.
+        </p>
+    </main>
 
-            <input
-                type="password"
-                id="senha"
-                name="senha"
-                placeholder="Digite sua senha"
-                required
-            >
-        </div>
-
-          
-
-
-        <button type="submit">
-            Entrar
-        </button>
-    </form>
-
-    <p>
-        Ainda não possui uma conta?
-        <a href="/cadastro">Cadastre-se</a>
-    </p>
-
-    <script>
-        const formulario = document.getElementById('form-login');
-        const elementoMensagem = document.getElementById('mensagem');
-
-        formulario.addEventListener('submit', async function(evento) {
-            evento.preventDefault();
-
-            elementoMensagem.textContent = '';
-            elementoMensagem.className = 'mensagem';
-
-            const email = document.getElementById('email').value;
-            const senha = document.getElementById('senha').value;
-
-            try {
-                const resposta = await fetch('/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email,
-                        senha
-                    })
-                });
-
-                const dados = await resposta.json();
-
-                elementoMensagem.textContent = dados.mensagem;
-
-                if (resposta.ok) {
-                    elementoMensagem.className = 'mensagem sucesso';
-
-                    setTimeout(function() {
-                        window.location.href = '/';
-                    }, 1000);
-                } else {
-                    elementoMensagem.className = 'mensagem erro';
-                }
-            } catch (erro) {
-                elementoMensagem.textContent =
-                    'Não foi possível conectar ao servidor.';
-
-                elementoMensagem.className = 'mensagem erro';
-            }
-        });
-    </script>
+    <!-- Mantenha aqui o script de autenticação
+         que já existe no seu projeto. -->
 
 </body>
 </html>
