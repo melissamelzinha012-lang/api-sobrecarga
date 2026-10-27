@@ -1,306 +1,157 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
+    <title>MinhaRotina | Dashboard</title>
     <link rel="stylesheet" href="/css/style.css">
-=======
->>>>>>> e74588f921c0bc25427fe78e73d0980303bb59b0
-
-    <title>Dashboard | Sobrecarga</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f3fa;
-            color: #29243a;
-        }
-
-        header {
-            background: #6d4bc3;
-            color: white;
-            padding: 30px;
-        }
-
-        header h1 {
-            margin-bottom: 8px;
-        }
-
-        main {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 3px 10px #00000010;
-        }
-
-        .card h2 {
-            color: #6d4bc3;
-            font-size: 20px;
-            margin-bottom: 18px;
-        }
-
-        .card p {
-            margin-bottom: 10px;
-            color: #555;
-        }
-
-        .alerta {
-            border-left: 5px solid #e09b24;
-        }
-
-        .atalhos {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .atalhos a {
-            background: #6d4bc3;
-            color: white;
-            padding: 12px 16px;
-            border-radius: 8px;
-            text-decoration: none;
-        }
-
-        .atalhos a:hover {
-            background: #53369c;
-        }
-
-        @media (max-width: 600px) {
-            .cards {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
 </head>
-
-<<<<<<< HEAD
-<body class="dashboard-page">
-=======
 <body>
->>>>>>> e74588f921c0bc25427fe78e73d0980303bb59b0
 
-    <header>
-        <h1>Meu Dashboard</h1>
-        <p>Organize sua rotina e seus horários de estudos.</p>
-    </header>
+<div class="dashboard-shell">
 
-    <main>
+    <aside class="sidebar">
+        <a href="/dashboard" class="brand">MinhaRotina</a>
 
-        <div class="cards">
+        <div class="profile">
+            <div class="profile-avatar">✦</div>
+            <div>
+                <strong>Olá, estudante!</strong>
+                <small>Organize sua rotina</small>
+            </div>
+        </div>
 
-            
-<!-- COMPROMISSOS DO DIA -->
+        <nav class="side-nav">
+            <a href="/dashboard" class="active">
+                <span class="side-icon">▦</span> Dashboard
+            </a>
+            <a href="/compromissos">
+                <span class="side-icon">▣</span> Compromissos
+            </a>
+            <a href="/provas">
+                <span class="side-icon">✎</span> Provas e trabalhos
+            </a>
+            <a href="/estudos">
+                <span class="side-icon">▤</span> Estudos
+            </a>
+            <a href="/tarefas">
+                <span class="side-icon">☑</span> Tarefas
+            </a>
+        </nav>
 
-<section class="card">
-    <h2> Compromissos do dia</h2>
+        <a href="/logout" class="logout-link">
+            <span class="side-icon">↪</span> Sair da conta
+        </a>
+    </aside>
 
-    <% if (compromissos.length === 0) { %>
+    <main class="dashboard-content">
 
-        <p>Nenhum compromisso para hoje.</p>
-
-    <% } else { %>
-
-        <% compromissos.forEach(compromisso => { %>
-
-            <div style="margin-bottom: 15px;">
-
-                <p>
-                    <strong>
-                        <%= compromisso.titulo %>
-                    </strong>
-                </p>
-
-                <p>
-                    Data: <%= compromisso.data %>
-                </p>
-
-                <p>
-                    Horário:
-                    <%= compromisso.horarioInicio %>
-                    -
-                    <%= compromisso.horarioFim %>
-                </p>
-
+        <header class="topbar">
+            <div class="welcome">
+                <h1>Olá! Vamos organizar seu dia?</h1>
+                <p>Acompanhe suas atividades e seus estudos.</p>
             </div>
 
-        <% }) %>
-
-    <% } %>
-</section>
-
-
-           <!-- PRÓXIMAS PROVAS -->
-
-<section class="card">
-    <h2> Próximas provas</h2>
-
-    <% if (provas.length === 0) { %>
-
-        <p>Nenhuma prova cadastrada.</p>
-
-    <% } else { %>
-
-        <% provas.forEach(prova => { %>
-
-            <div style="margin-bottom: 15px;">
-
-                <p>
-                    <strong>
-                        <%= prova.disciplina %>
-                    </strong>
-                </p>
-
-                <p>
-                    Data: <%= prova.data %>
-                </p>
-
-                <p>
-                    Horário: <%= prova.horario %>
-                </p>
-
+            <div class="topbar-tools">
+                <div class="search-box">⌕ &nbsp; Minha rotina</div>
+                <div class="tool-circle">♧</div>
             </div>
+        </header>
 
-        <% }) %>
+        <div class="dashboard-grid">
 
-    <% } %>
-</section>
+            <section class="card card-commitments">
+                <h2>Meus compromissos</h2>
 
+                <% if (compromissos.length === 0) { %>
+                    <p class="empty-state">Nenhum compromisso cadastrado.</p>
+                <% } else { %>
+                    <% compromissos.forEach(compromisso => { %>
+                        <div class="card-item">
+                            <p><strong><%= compromisso.titulo %></strong></p>
+                            <p>Data: <%= compromisso.data %></p>
+                            <p>Horário: <%= compromisso.horarioInicio %> – <%= compromisso.horarioFim %></p>
+                        </div>
+                    <% }) %>
+                <% } %>
+            </section>
 
-           
-<!-- TAREFAS PENDENTES -->
+            <section class="card card-exams">
+                <h2>Provas e trabalhos</h2>
 
-<section class="card">
-    <h2> Tarefas pendentes</h2>
+                <% if (provas.length === 0) { %>
+                    <p class="empty-state">Nenhuma prova cadastrada.</p>
+                <% } else { %>
+                    <% provas.forEach(prova => { %>
+                        <div class="card-item">
+                            <p><strong><%= prova.disciplina %></strong></p>
+                            <p>Data: <%= prova.data %></p>
+                            <p>Horário: <%= prova.horario %></p>
+                        </div>
+                    <% }) %>
+                <% } %>
+            </section>
 
-    <% if (tarefas.length === 0) { %>
+            <section class="card card-tasks">
+                <h2>Minhas tarefas</h2>
 
-        <p>Nenhuma tarefa pendente.</p>
+                <% if (tarefas.length === 0) { %>
+                    <p class="empty-state">Nenhuma tarefa cadastrada.</p>
+                <% } else { %>
+                    <% tarefas.forEach(tarefa => { %>
+                        <div class="card-item">
+                            <p><strong><%= tarefa.titulo %></strong></p>
+                            <p>Prazo: <%= tarefa.prazo %></p>
+                            <p>Status: <%= tarefa.status %></p>
+                        </div>
+                    <% }) %>
+                <% } %>
+            </section>
 
-    <% } else { %>
+            <section class="card card-studies">
+                <h2>Planejamento de estudos</h2>
 
-        <% tarefas.forEach(tarefa => { %>
+                <% if (estudos.length === 0) { %>
+                    <p class="empty-state">Nenhum estudo programado.</p>
+                <% } else { %>
+                    <% estudos.forEach(estudo => { %>
+                        <div class="card-item">
+                            <p><strong><%= estudo.titulo %></strong></p>
+                            <p>Data: <%= estudo.data %></p>
+                            <p>Horário: <%= estudo.horarioInicio %> – <%= estudo.horarioFim %></p>
+                        </div>
+                    <% }) %>
+                <% } %>
+            </section>
 
-            <div style="margin-bottom: 15px;">
+            <section class="card card-alerts">
+                <h2>Avisos e conflitos</h2>
 
-                <p>
-                    <strong>
-                        <%= tarefa.titulo %>
-                    </strong>
-                </p>
+                <% if (conflitos.length === 0) { %>
+                    <p>Nenhum conflito identificado.</p>
+                <% } else { %>
+                    <% conflitos.forEach(conflito => { %>
+                        <p><%= conflito.mensagem %></p>
+                    <% }) %>
+                <% } %>
+            </section>
 
-                <p>
-                    Prazo: <%= tarefa.prazo %>
-                </p>
+            <section class="card card-shortcuts">
+                <h2>Acesso rápido</h2>
+                <p>O que você deseja organizar?</p>
 
-                <p>
-                    Status: <%= tarefa.status %>
-                </p>
+                <div class="atalhos">
+                    <a href="/compromissos">＋ Compromissos</a>
+                    <a href="/provas">✎ Provas e trabalhos</a>
+                    <a href="/tarefas">☑ Minhas tarefas</a>
+                    <a href="/estudos">▤ Planejar estudos</a>
+                </div>
+            </section>
 
-            </div>
+        </div>
+    </main>
+</div>
 
-        <% }) %>
-
-    <% } %>
-</section>
-
-            
-<!-- PRÓXIMOS ESTUDOS -->
-
-<section class="card">
-    <h2> Próximos estudos</h2>
-
-    <% if (estudos.length === 0) { %>
-
-        <p>Nenhum estudo programado.</p>
-
-    <% } else { %>
-
-        <% estudos.forEach(estudo => { %>
-
-            <div style="margin-bottom: 15px;">
-
-                <p>
-                    <strong>
-                        <%= estudo.titulo %>
-                    </strong>
-                </p>
-
-                <p>
-                    Data: <%= estudo.data %>
-                </p>
-
-                <p>
-                    Horário:
-                    <%= estudo.horarioInicio %>
-                    -
-                    <%= estudo.horarioFim %>
-                </p>
-
-            </div>
-
-        <% }) %>
-
-    <% } %>
-</section>
-
-
-            <!-- AVISOS DE CONFLITO -->
-<section class="card alerta">
-    <h2> Avisos de conflito</h2>
-
-    <% if (conflitos.length === 0) { %>
-
-        <p>Nenhum conflito identificado.</p>
-
-    <% } else { %>
-
-        <% conflitos.forEach(conflito => { %>
-
-            <p>
-                <%= conflito.mensagem %>
-            </p>
-
-        <% }) %>
-
-    <% } %>
-</section>
-
-
-           <!-- ATALHOS -->
-<section class="card">
-    <h2>🔗 Atalhos</h2>
-
-    <div class="atalhos">
-
-        <a href="/compromissos">Compromissos</a>
-
-        <a href="/provas">Provas</a>
-
-        <a href="/tarefas">Tarefas</a>
-
-        <a href="/estudos">Estudos</a>
-
-    </div>
-</section>
+</body>
+</html>
