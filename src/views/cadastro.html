@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <link rel="stylesheet" href="/css/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
@@ -26,82 +27,31 @@
         }
     </style>
 </head>
-<body>
 
-    <h1>Cadastro</h1>
+<body class="auth-page">
+    <main class="auth-card">
+        <p class="auth-brand">MinhaRotina</p>
+        <h1>Criar conta</h1>
 
-    <div id="mensagem" class="mensagem"></div>
+        <form class="auth-form">
+            <div class="field">
+                <label for="nome">Nome</label>
+                <input id="nome" name="nome" type="text" required>
+            </div>
 
-    <form id="form-cadastro">
-        <div>
-            <label for="nome">Nome:</label>
+            <div class="field">
+                <label for="email">E-mail</label>
+                <input id="email" name="email" type="email" required>
+            </div>
 
-            <input
-                type="text"
-                id="nome"
-                name="nome"
-                placeholder="Digite seu nome"
-                required
-            >
-        </div>
+            <div class="field">
+                <label for="senha">Senha</label>
+                <input id="senha" name="senha" type="password" required>
+            </div>
 
-          
-
-
-        <div>
-            <label for="email">E-mail:</label>
-
-            <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Digite seu e-mail"
-                required
-            >
-        </div>
-
-          
-
-
-        <div>
-            <label for="senha">Senha:</label>
-
-            <input
-                type="password"
-                id="senha"
-                name="senha"
-                placeholder="Digite sua senha"
-                required
-            >
-        </div>
-
-          
-
-
-        <div>
-            <label for="confirmarSenha">Confirmar senha:</label>
-
-            <input
-                type="password"
-                id="confirmarSenha"
-                name="confirmarSenha"
-                placeholder="Digite a senha novamente"
-                required
-            >
-        </div>
-
-          
-
-
-        <button type="submit">
-            Cadastrar
-        </button>
-    </form>
-
-    <p>
-        Já possui uma conta?
-        <a href="/login">Faça login</a>
-    </p>
+            <button type="submit">Criar conta</button>
+        </form>
+    </main>
 
     <script>
         const formulario = document.getElementById('form-cadastro');

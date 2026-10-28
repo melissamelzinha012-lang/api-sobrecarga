@@ -19,11 +19,28 @@ router.get(
   compromissoController.listar.bind(compromissoController)
 );
 
+router.post(
+  "/:id/editar",
+  compromissoController.atualizar.bind(compromissoController)
+);
+
+router.post(
+  "/:id/excluir",
+  compromissoController.excluir.bind(compromissoController)
+);
+
+
 // Buscar compromisso por ID
 router.get(
   "/:id",
   compromissoController.buscarPorId.bind(compromissoController)
 );
+
+router.post(
+  "/:id/excluir",
+  compromissoController.excluir.bind(compromissoController)
+);
+
 
 // Criar compromisso
 router.post(

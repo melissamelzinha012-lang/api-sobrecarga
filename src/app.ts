@@ -27,9 +27,11 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 8
   }
 }));
+app.use('/compromissos', compromissoRoutes);
+
 
 // Páginas acessadas pelo navegador.
-app.get('/', (_req, res) => res.redirect('/dashboard'));
+app.get('/', (_req, res) => res.redirect('/login'));
 app.get('/login', (_req, res) => res.sendFile(path.join(__dirname, 'views', 'login.html')));
 app.get('/cadastro', (_req, res) => res.sendFile(path.join(__dirname, 'views', 'cadastro.html')));
 

@@ -1,157 +1,183 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MinhaRotina | Dashboard</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
 
-<div class="dashboard-shell">
+    <div class="dashboard-shell">
 
-    <aside class="sidebar">
-        <a href="/dashboard" class="brand">MinhaRotina</a>
+        <aside class="sidebar">
+            <a href="/dashboard" class="brand">MinhaRotina</a>
 
-        <div class="profile">
-            <div class="profile-avatar">✦</div>
-            <div>
-                <strong>Olá, estudante!</strong>
-                <small>Organize sua rotina</small>
-            </div>
-        </div>
-
-        <nav class="side-nav">
-            <a href="/dashboard" class="active">
-                <span class="side-icon">▦</span> Dashboard
-            </a>
-            <a href="/compromissos">
-                <span class="side-icon">▣</span> Compromissos
-            </a>
-            <a href="/provas">
-                <span class="side-icon">✎</span> Provas e trabalhos
-            </a>
-            <a href="/estudos">
-                <span class="side-icon">▤</span> Estudos
-            </a>
-            <a href="/tarefas">
-                <span class="side-icon">☑</span> Tarefas
-            </a>
-        </nav>
-
-        <a href="/logout" class="logout-link">
-            <span class="side-icon">↪</span> Sair da conta
-        </a>
-    </aside>
-
-    <main class="dashboard-content">
-
-        <header class="topbar">
-            <div class="welcome">
-                <h1>Olá! Vamos organizar seu dia?</h1>
-                <p>Acompanhe suas atividades e seus estudos.</p>
-            </div>
-
-            <div class="topbar-tools">
-                <div class="search-box">⌕ &nbsp; Minha rotina</div>
-                <div class="tool-circle">♧</div>
-            </div>
-        </header>
-
-        <div class="dashboard-grid">
-
-            <section class="card card-commitments">
-                <h2>Meus compromissos</h2>
-
-                <% if (compromissos.length === 0) { %>
-                    <p class="empty-state">Nenhum compromisso cadastrado.</p>
-                <% } else { %>
-                    <% compromissos.forEach(compromisso => { %>
-                        <div class="card-item">
-                            <p><strong><%= compromisso.titulo %></strong></p>
-                            <p>Data: <%= compromisso.data %></p>
-                            <p>Horário: <%= compromisso.horarioInicio %> – <%= compromisso.horarioFim %></p>
-                        </div>
-                    <% }) %>
-                <% } %>
-            </section>
-
-            <section class="card card-exams">
-                <h2>Provas e trabalhos</h2>
-
-                <% if (provas.length === 0) { %>
-                    <p class="empty-state">Nenhuma prova cadastrada.</p>
-                <% } else { %>
-                    <% provas.forEach(prova => { %>
-                        <div class="card-item">
-                            <p><strong><%= prova.disciplina %></strong></p>
-                            <p>Data: <%= prova.data %></p>
-                            <p>Horário: <%= prova.horario %></p>
-                        </div>
-                    <% }) %>
-                <% } %>
-            </section>
-
-            <section class="card card-tasks">
-                <h2>Minhas tarefas</h2>
-
-                <% if (tarefas.length === 0) { %>
-                    <p class="empty-state">Nenhuma tarefa cadastrada.</p>
-                <% } else { %>
-                    <% tarefas.forEach(tarefa => { %>
-                        <div class="card-item">
-                            <p><strong><%= tarefa.titulo %></strong></p>
-                            <p>Prazo: <%= tarefa.prazo %></p>
-                            <p>Status: <%= tarefa.status %></p>
-                        </div>
-                    <% }) %>
-                <% } %>
-            </section>
-
-            <section class="card card-studies">
-                <h2>Planejamento de estudos</h2>
-
-                <% if (estudos.length === 0) { %>
-                    <p class="empty-state">Nenhum estudo programado.</p>
-                <% } else { %>
-                    <% estudos.forEach(estudo => { %>
-                        <div class="card-item">
-                            <p><strong><%= estudo.titulo %></strong></p>
-                            <p>Data: <%= estudo.data %></p>
-                            <p>Horário: <%= estudo.horarioInicio %> – <%= estudo.horarioFim %></p>
-                        </div>
-                    <% }) %>
-                <% } %>
-            </section>
-
-            <section class="card card-alerts">
-                <h2>Avisos e conflitos</h2>
-
-                <% if (conflitos.length === 0) { %>
-                    <p>Nenhum conflito identificado.</p>
-                <% } else { %>
-                    <% conflitos.forEach(conflito => { %>
-                        <p><%= conflito.mensagem %></p>
-                    <% }) %>
-                <% } %>
-            </section>
-
-            <section class="card card-shortcuts">
-                <h2>Acesso rápido</h2>
-                <p>O que você deseja organizar?</p>
-
-                <div class="atalhos">
-                    <a href="/compromissos">＋ Compromissos</a>
-                    <a href="/provas">✎ Provas e trabalhos</a>
-                    <a href="/tarefas">☑ Minhas tarefas</a>
-                    <a href="/estudos">▤ Planejar estudos</a>
+            <div class="profile">
+                <div class="profile-avatar">✦</div>
+                <div>
+                    <strong>Olá, estudante!</strong>
+                    <small>Organize sua rotina</small>
                 </div>
-            </section>
+            </div>
 
-        </div>
-    </main>
-</div>
+            <nav class="side-nav">
+                <a href="/dashboard" class="active">
+                    <span class="side-icon">▦</span> Dashboard
+                </a>
+                <a href="/compromissos">
+                    <span class="side-icon">▣</span> Compromissos
+                </a>
+                <a href="/provas">
+                    <span class="side-icon">✎</span> Provas e trabalhos
+                </a>
+                <a href="/estudos">
+                    <span class="side-icon">▤</span> Estudos
+                </a>
+                <a href="/tarefas">
+                    <span class="side-icon">☑</span> Tarefas
+                </a>
+            </nav>
+
+            <a href="/logout" class="logout-link">
+                <span class="side-icon">↪</span> Sair da conta
+            </a>
+        </aside>
+
+        <main class="dashboard-content">
+
+            <header class="topbar">
+                <div class="welcome">
+                    <h1>Olá! Vamos organizar seu dia?</h1>
+                    <p>Acompanhe suas atividades e seus estudos.</p>
+                </div>
+
+                <div class="topbar-tools">
+                    <div class="search-box">⌕ &nbsp; Minha rotina</div>
+                    <div class="tool-circle">♧</div>
+                </div>
+            </header>
+
+            <div class="dashboard-grid">
+
+                <section class="card card-commitments">
+                    <h2>Meus compromissos</h2>
+
+                    <% if (compromissos.length===0) { %>
+                        <p class="empty-state">Nenhum compromisso cadastrado.</p>
+                        <% } else { %>
+                            <% compromissos.forEach(compromisso=> { %>
+                                <div class="card-item">
+                                    <p><strong>
+                                            <%= compromisso.titulo %>
+                                        </strong></p>
+                                    <p>Data: <%= compromisso.data %>
+                                    </p>
+                                    <p>Horário: <%= compromisso.horarioInicio %> – <%= compromisso.horarioFim %>
+                                    </p>
+                                </div>
+
+                                <form action="/compromissos/<%= compromisso.id %>/excluir" method="post"
+                                    onsubmit="return confirm('Tem certeza que deseja excluir este compromisso?')">
+                                    <button type="submit">Excluir</button>
+                                </form>
+
+                                <% }) %>
+                                    <% } %>
+                </section>
+
+                <section class="card card-exams">
+                    <h2>Provas e trabalhos</h2>
+
+                    <% if (provas.length===0) { %>
+                        <p class="empty-state">Nenhuma prova cadastrada.</p>
+                        <% } else { %>
+                            <% provas.forEach(prova=> { %>
+                                <div class="card-item">
+                                    <p><strong>
+                                            <%= prova.disciplina %>
+                                        </strong></p>
+                                    <p>Data: <%= prova.data %>
+                                    </p>
+                                    <p>Horário: <%= prova.horario %>
+                                    </p>
+                                </div>
+                                <% }) %>
+                                    <% } %>
+                </section>
+
+                <section class="card card-tasks">
+                    <h2>Minhas tarefas</h2>
+
+                    <% if (tarefas.length===0) { %>
+                        <p class="empty-state">Nenhuma tarefa cadastrada.</p>
+                        <% } else { %>
+                            <% tarefas.forEach(tarefa=> { %>
+                                <div class="card-item">
+                                    <p><strong>
+                                            <%= tarefa.titulo %>
+                                        </strong></p>
+                                    <p>Prazo: <%= tarefa.prazo %>
+                                    </p>
+                                    <p>Status: <%= tarefa.status %>
+                                    </p>
+                                </div>
+                                <% }) %>
+                                    <% } %>
+                </section>
+
+                <section class="card card-studies">
+                    <h2>Planejamento de estudos</h2>
+
+                    <% if (estudos.length===0) { %>
+                        <p class="empty-state">Nenhum estudo programado.</p>
+                        <% } else { %>
+                            <% estudos.forEach(estudo=> { %>
+                                <div class="card-item">
+                                    <p><strong>
+                                            <%= estudo.titulo %>
+                                        </strong></p>
+                                    <p>Data: <%= estudo.data %>
+                                    </p>
+                                    <p>Horário: <%= estudo.horarioInicio %> – <%= estudo.horarioFim %>
+                                    </p>
+                                </div>
+                                <% }) %>
+                                    <% } %>
+                </section>
+
+                <section class="card card-alerts">
+                    <h2>Avisos e conflitos</h2>
+
+                    <% if (conflitos.length===0) { %>
+                        <p>Nenhum conflito identificado.</p>
+                        <% } else { %>
+                            <% conflitos.forEach(conflito=> { %>
+                                <p>
+                                    <%= conflito.mensagem %>
+                                </p>
+                                <% }) %>
+                                    <% } %>
+                </section>
+
+                <section class="card card-shortcuts">
+                    <h2>Acesso rápido</h2>
+                    <p>O que você deseja organizar?</p>
+
+                    <div class="atalhos">
+                        <a href="/compromissos">＋ Compromissos</a>
+                        <a href="/provas">✎ Provas e trabalhos</a>
+                        <a href="/tarefas">☑ Minhas tarefas</a>
+                        <a href="/estudos">▤ Planejar estudos</a>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
 
 </body>
+
 </html>

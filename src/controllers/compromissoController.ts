@@ -194,9 +194,8 @@ export class CompromissoController {
         return res.status(404).send("Compromisso não encontrado");
       }
 
-      return res.json({
-        mensagem: "Compromisso excluído com sucesso",
-      });
+      return res.redirect('/compromissos');
+
     } catch (error) {
       console.error("Erro ao excluir compromisso:", error);
       return res.status(500).send("Erro ao excluir compromisso");
