@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#741f98">
+    <title>Entrar | MinhaRotina</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="auth-page">
+    <main class="auth-shell">
+        <section class="auth-aside" aria-label="Sobre o MinhaRotina">
+            <a class="auth-wordmark" href="/login">MinhaRotina</a>
+            <div class="auth-aside-copy">
+                <p class="auth-overline">PARA A VIDA DE ESTUDANTE</p>
+                <h1>Um pouco mais de clareza para a sua semana.</h1>
+                <p>Reúna compromissos, datas importantes e horários de estudo em um só lugar.</p>
+                <a class="auth-aside-action" href="/cadastro">CRIAR UMA CONTA</a>
+            </div>
+            <p class="auth-aside-foot">Sua rotina, do seu jeito.</p>
+        </section>
+
+        <section class="auth-main" aria-labelledby="titulo-login">
+            <div class="auth-main-inner">
+                <p class="auth-kicker">MINHAROTINA</p>
+                <h2 id="titulo-login">Entrar</h2>
+                <p class="auth-intro">Acesse sua conta para continuar de onde parou.</p>
+
+                <div id="mensagem" class="mensagem" role="status" aria-live="polite"></div>
+
+                <form id="form-login" class="auth-form">
+                    <div class="field">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" placeholder="voce@exemplo.com" autocomplete="email" required>
+                    </div>
+                    <div class="field">
+                        <label for="senha">Senha</label>
+                        <input type="password" id="senha" name="senha" placeholder="Sua senha" autocomplete="current-password" required>
+                    </div>
+                    <button type="submit">ENTRAR</button>
+                </form>
+
+                <p class="auth-switch">Ainda não tem uma conta? <a href="/cadastro">Cadastre-se</a></p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const formulario = document.getElementById('form-login');
+        const mensagem = document.getElementById('mensagem');
+
+        formulario.addEventListener('submit', async (evento) => {
+            evento.preventDefault();
+            mensagem.textContent = '';
+            mensagem.className = 'mensagem';
+
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+
+            try {
+                const resposta = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, senha })
+                });
+                const dados = await resposta.json();
+
+                if (!resposta.ok) {
+                    mensagem.textContent = dados.mensagem || 'E-mail ou senha inválidos.';
+                    mensagem.classList.add('erro');
+                    return;
+                }
+
+                window.location.href = '/dashboard';
+            } catch (erro) {
+                mensagem.textContent = 'Não foi possível conectar ao servidor. Tente novamente.';
+                mensagem.classList.add('erro');
+            }
+        });
+    </script>
+</body>
+</html>

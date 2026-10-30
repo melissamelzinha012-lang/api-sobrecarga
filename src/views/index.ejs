@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MinhaRotina | Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <div class="dashboard-shell">
+
+        <aside class="sidebar">
+            <a href="/dashboard" class="brand">MinhaRotina</a>
+
+            <div class="profile">
+                <div class="profile-avatar">✦</div>
+                <div>
+                    <strong>Olá, estudante!</strong>
+                    <small>Organize sua rotina</small>
+                </div>
+            </div>
+
+            <nav class="side-nav">
+                <a href="/dashboard" class="active">
+                    <span class="side-icon">▦</span> Dashboard
+                </a>
+                <a href="/compromissos">
+                    <span class="side-icon">▣</span> Compromissos
+                </a>
+                <a href="/provas">
+                    <span class="side-icon">✎</span> Provas e trabalhos
+                </a>
+                <a href="/estudos">
+                    <span class="side-icon">▤</span> Estudos
+                </a>
+                <a href="/tarefas">
+                    <span class="side-icon">☑</span> Tarefas
+                </a>
+            </nav>
+
+            <a href="/logout" class="logout-link">
+                <span class="side-icon">↪</span> Sair da conta
+            </a>
+        </aside>
+
+        <main class="dashboard-content">
+
+            <header class="topbar">
+                <div class="welcome">
+                    <h1>Sua semana começa por aqui.</h1>
+                    <p>Uma visão clara dos compromissos e dos estudos que vêm pela frente.</p>
+                </div>
+            </header>
+
+            <section class="project-note" aria-labelledby="sobre-minharotina">
+                <div class="project-note-copy">
+                    <p class="section-kicker">SOBRE O PROJETO</p>
+                    <h2 id="sobre-minharotina">A rotina acadêmica, em um só lugar.</h2>
+                    <p>O MinhaRotina foi pensado para ajudar estudantes a acompanhar prazos e organizar o tempo de estudo sem depender de anotações espalhadas. Consulte o que está por vir e mantenha sua semana mais previsível.</p>
+                    <div class="project-note-list" aria-label="Áreas do projeto">
+                        <p><span>01</span> Compromissos do dia a dia</p>
+                        <p><span>02</span> Provas e trabalhos</p>
+                        <p><span>03</span> Planejamento de estudos</p>
+                    </div>
+                </div>
+                <figure class="project-note-photo">
+                    <img src="/images/estudantes-estudando.jpg" alt="Estudantes reunidos estudando juntos em uma biblioteca" loading="lazy">
+                    <figcaption>Foto: <a href="https://www.pexels.com/photo/a-group-of-students-studying-in-the-library-6684506/" target="_blank" rel="noreferrer">Andy Barbour / Pexels</a></figcaption>
+                </figure>
+            </section>
+
+            <div class="dashboard-grid">
+
+                <section class="card card-commitments">
+                    <h2>Meus compromissos</h2>
+
+                    <% if (compromissos.length===0) { %>
+                        <p class="empty-state">Nenhum compromisso cadastrado.</p>
+                        <% } else { %>
+                            <% compromissos.forEach(compromisso=> { %>
+                                <div class="card-item">
+                                    <p><strong>
+                                            <%= compromisso.titulo %>
+                                        </strong></p>
+                                    <p>Data: <%= compromisso.data %>
+                                    </p>
+                                    <p>Horário: <%= compromisso.horarioInicio %> – <%= compromisso.horarioFim %>
+                                    </p>
+                                </div>
+
+                                <form action="/compromissos/<%= compromisso.id %>/excluir" method="post"
+                                    onsubmit="return confirm('Tem certeza que deseja excluir este compromisso?')">
+                                    <button type="submit">Excluir</button>
+                                </form>
+
+                                <% }) %>
+                                    <% } %>
+                </section>
+
+                <section class="card card-exams">
+                    <h2>Provas e trabalhos</h2>
+
+                    <% if (provas.length===0) { %>
+                        <p class="empty-state">Nenhuma prova cadastrada.</p>
+                        <% } else { %>
+                            <% provas.forEach(prova=> { %>
+                                <div class="card-item">
+                                    <p><strong>
+                                            <%= prova.disciplina %>
+                                        </strong></p>
+                                    <p>Data: <%= prova.data %>
+                                    </p>
+                                    <p>Horário: <%= prova.horario %>
+                                    </p>
+                                </div>
+                                <% }) %>
+                                    <% } %>
+                </section>
+
+                <section class="card card-tasks">
+                    <h2>Minhas tarefas</h2>
+
+                    <% if (tarefas.length===0) { %>
+                        <p class="empty-state">Nenhuma tarefa cadastrada.</p>
+                        <% } else { %>
+                            <% tarefas.forEach(tarefa=> { %>
+                                <div class="card-item">
+                                    <p><strong>
+                                            <%= tarefa.titulo %>
+                                        </strong></p>
+                                    <p>Prazo: <%= tarefa.prazo %>
+                                    </p>
+                                    <p>Status: <%= tarefa.status %>
+                                    </p>
+                                </div>
+                                <% }) %>
+                                    <% } %>
+                </section>
+
+                <section class="card card-studies">
+                    <h2>Planejamento de estudos</h2>
+
+                    <% if (estudos.length===0) { %>
+                        <p class="empty-state">Nenhum estudo programado.</p>
+                        <% } else { %>
+                            <% estudos.forEach(estudo=> { %>
+                                <div class="card-item">
+                                    <p><strong>
+                                            <%= estudo.titulo %>
+                                        </strong></p>
+                                    <p>Data: <%= estudo.data %>
+                                    </p>
+                                    <p>Horário: <%= estudo.horarioInicio %> – <%= estudo.horarioFim %>
+                                    </p>
+                                </div>
+                                <% }) %>
+                                    <% } %>
+                </section>
+
+                <section class="card card-alerts">
+                    <h2>Avisos e conflitos</h2>
+
+                    <% if (conflitos.length===0) { %>
+                        <p>Nenhum conflito identificado.</p>
+                        <% } else { %>
+                            <% conflitos.forEach(conflito=> { %>
+                                <p>
+                                    <%= conflito.mensagem %>
+                                </p>
+                                <% }) %>
+                                    <% } %>
+                </section>
+
+                <section class="card card-shortcuts">
+                    <h2>Acesso rápido</h2>
+                    <p>O que você deseja organizar?</p>
+
+                    <div class="atalhos">
+                        <a href="/compromissos">＋ Compromissos</a>
+                        <a href="/provas">✎ Provas e trabalhos</a>
+                        <a href="/tarefas">☑ Minhas tarefas</a>
+                        <a href="/estudos">▤ Planejar estudos</a>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+</body>
+
+</html>
