@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<<<<<<< HEAD
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#741f98">
@@ -47,10 +48,63 @@
                 <p class="auth-switch">Já tem cadastro? <a href="/login">Entre na sua conta</a></p>
             </div>
         </section>
+=======
+    <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+
+    <style>
+        .mensagem {
+            display: none;
+            padding: 10px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .mensagem.erro {
+            display: block;
+            color: #842029;
+            background-color: #f8d7da;
+        }
+
+        .mensagem.sucesso {
+            display: block;
+            color: #0f5132;
+            background-color: #d1e7dd;
+        }
+    </style>
+</head>
+
+<body class="auth-page">
+    <main class="auth-card">
+        <p class="auth-brand">MinhaRotina</p>
+        <h1>Criar conta</h1>
+
+        <form class="auth-form">
+            <div class="field">
+                <label for="nome">Nome</label>
+                <input id="nome" name="nome" type="text" required>
+            </div>
+
+            <div class="field">
+                <label for="email">E-mail</label>
+                <input id="email" name="email" type="email" required>
+            </div>
+
+            <div class="field">
+                <label for="senha">Senha</label>
+                <input id="senha" name="senha" type="password" required>
+            </div>
+
+            <button type="submit">Criar conta</button>
+        </form>
+>>>>>>> b0f1d70edeeec50873bf3c49aed522a4734da823
     </main>
 
     <script>
         const formulario = document.getElementById('form-cadastro');
+<<<<<<< HEAD
         const mensagem = document.getElementById('mensagem');
 
         formulario.addEventListener('submit', async (evento) => {
@@ -61,10 +115,34 @@
             const nome = document.getElementById('nome').value.trim();
             const email = document.getElementById('email').value.trim();
             const senha = document.getElementById('senha').value;
+=======
+        const elementoMensagem = document.getElementById('mensagem');
+
+        formulario.addEventListener('submit', async function(evento) {
+            evento.preventDefault();
+
+            elementoMensagem.textContent = '';
+            elementoMensagem.className = 'mensagem';
+
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            const confirmarSenha =
+                document.getElementById('confirmarSenha').value;
+
+            if (senha !== confirmarSenha) {
+                elementoMensagem.textContent =
+                    'As senhas não são iguais.';
+
+                elementoMensagem.className = 'mensagem erro';
+                return;
+            }
+>>>>>>> b0f1d70edeeec50873bf3c49aed522a4734da823
 
             try {
                 const resposta = await fetch('/cadastro', {
                     method: 'POST',
+<<<<<<< HEAD
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ nome, email, senha })
                 });
@@ -84,3 +162,43 @@
     </script>
 </body>
 </html>
+=======
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        nome,
+                        email,
+                        senha,
+                        confirmarSenha
+                    })
+                });
+
+                const dados = await resposta.json();
+
+                elementoMensagem.textContent = dados.mensagem;
+
+                if (resposta.ok) {
+                    elementoMensagem.className = 'mensagem sucesso';
+
+                    formulario.reset();
+
+                    setTimeout(function() {
+                        window.location.href = '/login';
+                    }, 1500);
+                } else {
+                    elementoMensagem.className = 'mensagem erro';
+                }
+            } catch (erro) {
+                elementoMensagem.textContent =
+                    'Não foi possível conectar ao servidor.';
+
+                elementoMensagem.className = 'mensagem erro';
+            }
+        });
+    </script>
+
+</body>
+</html>
+ 
+>>>>>>> b0f1d70edeeec50873bf3c49aed522a4734da823
