@@ -1,0 +1,24 @@
+<%
+  // Espera: grafico = { titulo, barras: [{ rotulo, detalhe, quantidade, destaque }], unidade: [singular, plural] }
+  const maximoBarras = Math.max(1, ...grafico.barras.map(b => b.quantidade));
+  const pluralBarras = (n) => n === 1 ? grafico.unidade[0] : grafico.unidade[1];
+%>
+<figure class="painel-grafico">
+    <figcaption class="painel-rotulo"><%= grafico.titulo %></figcaption>
+    <div class="painel-barras<%= grafico.barras.length > 8 ? ' compacto' : '' %>" role="list">
+        <% grafico.barras.forEach(barra => { %>
+        <div class="painel-barra<%= barra.destaque ? ' destaque' : '' %>" role="listitem" tabindex="0"
+             aria-label="<%= barra.rotulo %> (<%= barra.detalhe %>): <%= barra.quantidade %> <%= pluralBarras(barra.quantidade) %>">
+            <span class="painel-barra-valor"><%= barra.quantidade > 0 ? barra.quantidade : '' %></span>
+            <span class="painel-barra-trilho">
+                <span class="painel-barra-preenchimento" style="height: <%= Math.round(barra.quantidade / maximoBarras * 100) %>%"></span>
+            </span>
+            <span class="painel-barra-rotulo"><%= barra.rotulo %></span>
+            <span class="painel-dica" aria-hidden="true">
+                <strong><%= barra.quantidade %> <%= pluralBarras(barra.quantidade) %></strong>
+                <%= barra.detalhe %>
+            </span>
+        </div>
+        <% }) %>
+    </div>
+</figure>

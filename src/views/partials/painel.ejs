@@ -1,7 +1,5 @@
 <%
   // Espera: painel = { cartoes, proximo, barras, tituloGrafico, unidade }, rotuloProximo
-  const maximo = Math.max(1, ...painel.barras.map(b => b.quantidade));
-  const plural = (n) => n === 1 ? painel.unidade[0] : painel.unidade[1];
 %>
 <section class="painel" aria-label="Resumo">
     <div class="painel-cartoes">
@@ -30,24 +28,6 @@
             <% } %>
         </div>
 
-        <figure class="painel-grafico">
-            <figcaption class="painel-rotulo"><%= painel.tituloGrafico %></figcaption>
-            <div class="painel-barras" role="list">
-                <% painel.barras.forEach(barra => { %>
-                <div class="painel-barra<%= barra.destaque ? ' destaque' : '' %>" role="listitem" tabindex="0"
-                     aria-label="<%= barra.rotulo %> (<%= barra.detalhe %>): <%= barra.quantidade %> <%= plural(barra.quantidade) %>">
-                    <span class="painel-barra-valor"><%= barra.quantidade > 0 ? barra.quantidade : '' %></span>
-                    <span class="painel-barra-trilho">
-                        <span class="painel-barra-preenchimento" style="height: <%= Math.round(barra.quantidade / maximo * 100) %>%"></span>
-                    </span>
-                    <span class="painel-barra-rotulo"><%= barra.rotulo %></span>
-                    <span class="painel-dica" aria-hidden="true">
-                        <strong><%= barra.quantidade %> <%= plural(barra.quantidade) %></strong>
-                        <%= barra.detalhe %>
-                    </span>
-                </div>
-                <% }) %>
-            </div>
-        </figure>
+        <%- include('grafico-barras', { grafico: { titulo: painel.tituloGrafico, barras: painel.barras, unidade: painel.unidade } }) %>
     </div>
 </section>

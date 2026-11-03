@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesso restrito | Dayly</title>
+    <link rel="icon" type="image/png" href="/images/dayly-icone.png">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="com-menu">
+
+<div class="dashboard-shell">
+    <%- include('../partials/sidebar', { ativo: '' }) %>
+
+    <main class="dashboard-content rota-conteudo">
+        <section class="admin-negado">
+            <span class="admin-negado-icone" aria-hidden="true">🔒</span>
+            <h1>Área restrita a administradores</h1>
+            <p>Sua conta não tem permissão para acessar esta página. Se você precisa desse acesso, fale com um administrador do Dayly.</p>
+            <a href="/dashboard" class="admin-botao">Voltar ao dashboard</a>
+        </section>
+    </main>
+</div>
+
+</body>
+
+</html>

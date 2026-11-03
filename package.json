@@ -8,7 +8,8 @@
     "start": "node dist/server.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:studio": "prisma studio"
+    "prisma:studio": "prisma studio",
+    "admin:criar": "tsx prisma/criar-admin.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",

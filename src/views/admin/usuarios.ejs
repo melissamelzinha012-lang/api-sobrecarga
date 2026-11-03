@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuários | Dayly</title>
+    <link rel="icon" type="image/png" href="/images/dayly-icone.png">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="com-menu">
+
+<div class="dashboard-shell">
+    <%- include('../partials/sidebar', { ativo: 'admin-usuarios' }) %>
+
+    <main class="dashboard-content rota-conteudo">
+        <header class="admin-topo">
+            <div>
+                <p class="section-kicker">ÁREA ADMINISTRATIVA</p>
+                <h1>Usuários</h1>
+                <p>Veja quem usa o Dayly, conceda permissões de administrador e remova contas.</p>
+            </div>
+        </header>
+
+        <% if (mensagem) { %>
+            <div class="admin-aviso <%= mensagem.tipo %>" role="status"><%= mensagem.texto %></div>
+        <% } %>
+
+        <section class="admin-cartao">
+            <form class="admin-busca" method="GET" action="/admin/usuarios" role="search">
+                <label for="busca" class="sr-only">Buscar por nome ou e-mail</label>
+                <input type="search" id="busca" name="busca" value="<%= busca %>" placeholder="Buscar por nome ou e-mail">
+                <button type="submit" class="admin-botao">Buscar</button>
+                <% if (busca) { %><a href="/admin/usuarios" class="admin-link">Limpar</a><% } %>
+            </form>
+
+            <p class="admin-contagem">
+                <%= usuarios.length %> <%= usuarios.length === 1 ? 'usuário encontrado' : 'usuários encontrados' %>
+                <% if (busca) { %>para “<%= busca %>”<% } %>
+            </p>
+
+            <% if (usuarios.length === 0) { %>
+                <p class="admin-vazio">Nenhum usuário corresponde à busca.</p>
+            <% } else { %>
+            <div class="admin-tabela-rolagem">
+                <table class="admin-tabela">
+                    <thead>
+                        <tr>
+                            <th scope="col">Usuário</th>
+                            <th scope="col">Perfil</th>
+                            <th scope="col">Cadastro</th>
+                            <th scope="col" class="num">Compromissos</th>
+                            <th scope="col" class="num">Tarefas</th>
+                            <th scope="col" class="num">Estudos</th>
+                            <th scope="col"><span class="sr-only">Ações</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% usuarios.forEach(u => { const ehAdminLinha = u.perfil === PERFIL_ADMIN; const souEu = u.id === meuId; %>
+                        <tr>
+                            <td>
+                                <div class="admin-usuario">
+                                    <span class="admin-avatar"><%= (u.nome || '?').trim().charAt(0).toUpperCase() %></span>
+                                    <span class="admin-lista-texto">
+                                        <strong><%= u.nome %><% if (souEu) { %> <small class="admin-voce">(você)</small><% } %></strong>
+                                        <small><%= u.email %></small>
+                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="admin-perfil <%= ehAdminLinha ? 'admin' : '' %>"><%= ehAdminLinha ? 'Administrador' : 'Usuário' %></span>
+                            </td>
+                            <td><%= new Date(u.criadoEm).toLocaleDateString('pt-BR') %></td>
+                            <td class="num"><%= u._count.compromissos %></td>
+                            <td class="num"><%= u._count.tarefas %></td>
+                            <td class="num"><%= u._count.estudos %></td>
+                            <td>
+                                <div class="admin-acoes">
+                                    <% if (!souEu) { %>
+                                    <form method="POST" action="/admin/usuarios/<%= u.id %>/perfil">
+                                        <input type="hidden" name="perfil" value="<%= ehAdminLinha ? 'usuario' : PERFIL_ADMIN %>">
+                                        <button type="submit" class="admin-acao"><%= ehAdminLinha ? 'Remover admin' : 'Tornar admin' %></button>
+                                    </form>
+                                    <form method="POST" action="/admin/usuarios/<%= u.id %>/excluir"
+                                          data-confirmar="Excluir a conta de <%= u.nome %>? Todos os compromissos, tarefas e estudos dela serão apagados. Essa ação não pode ser desfeita.">
+                                        <button type="submit" class="admin-acao perigo">Excluir</button>
+                                    </form>
+                                    <% } else { %>
+                                    <span class="admin-detalhe">Sua conta</span>
+                                    <% } %>
+                                </div>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <% } %>
+        </section>
+    </main>
+</div>
+
+<script>
+    // Pede confirmação antes de excluir uma conta.
+    document.querySelectorAll('form[data-confirmar]').forEach((form) => {
+        form.addEventListener('submit', (evento) => {
+            if (!window.confirm(form.dataset.confirmar)) evento.preventDefault();
+        });
+    });
+</script>
+
+</body>
+
+</html>

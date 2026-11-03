@@ -1,5 +1,10 @@
 <%
   const paginaAtiva = typeof ativo !== 'undefined' ? ativo : '';
+  const logado = typeof usuario !== 'undefined' && usuario ? usuario : null;
+  const ehAdmin = !!(logado && logado.perfil === 'ADMIN');
+  const primeiroNome = logado && logado.nome ? logado.nome.trim().split(/\s+/)[0] : 'estudante';
+  const inicial = primeiroNome.charAt(0).toUpperCase();
+
   const links = [
     { chave: 'dashboard', href: '/dashboard', icone: '▦', texto: 'Dashboard' },
     { chave: 'compromissos', href: '/compromissos', icone: '▣', texto: 'Compromissos' },
@@ -7,19 +12,37 @@
     { chave: 'estudos', href: '/estudos', icone: '▤', texto: 'Estudos' },
     { chave: 'tarefas', href: '/tarefas', icone: '☑', texto: 'Tarefas' },
   ];
+
+  const linksAdmin = [
+    { chave: 'admin', href: '/admin', icone: '◈', texto: 'Visão geral' },
+    { chave: 'admin-usuarios', href: '/admin/usuarios', icone: '◉', texto: 'Usuários' },
+  ];
 %>
 <aside class="sidebar">
-    <a href="/dashboard" class="brand"><img src="/images/dayly-logo-escuro.png" alt="Dayly"></a>
+    <a href="<%= ehAdmin ? '/admin' : '/dashboard' %>" class="brand"><img src="/images/dayly-logo-escuro.png" alt="Dayly"></a>
 
     <div class="profile">
-        <div class="profile-avatar">✦</div>
+        <div class="profile-avatar"><%= logado ? inicial : '✦' %></div>
         <div>
-            <strong>Olá, estudante!</strong>
-            <small>Organize sua rotina</small>
+            <strong>Olá, <%= primeiroNome %>!</strong>
+            <% if (ehAdmin) { %>
+                <small class="perfil-admin">Administrador</small>
+            <% } else { %>
+                <small>Organize sua rotina</small>
+            <% } %>
         </div>
     </div>
 
-    <nav class="side-nav">
+    <nav class="side-nav" aria-label="Menu principal">
+        <% if (ehAdmin) { %>
+            <span class="side-nav-titulo">Administração</span>
+            <% linksAdmin.forEach(link => { %>
+            <a href="<%= link.href %>"<% if (link.chave === paginaAtiva) { %> class="active" aria-current="page"<% } %>>
+                <span class="side-icon"><%= link.icone %></span> <%= link.texto %>
+            </a>
+            <% }) %>
+            <span class="side-nav-titulo">Minha rotina</span>
+        <% } %>
         <% links.forEach(link => { %>
         <a href="<%= link.href %>"<% if (link.chave === paginaAtiva) { %> class="active" aria-current="page"<% } %>>
             <span class="side-icon"><%= link.icone %></span> <%= link.texto %>

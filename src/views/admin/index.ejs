@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração | Dayly</title>
+    <link rel="icon" type="image/png" href="/images/dayly-icone.png">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="com-menu">
+
+<div class="dashboard-shell">
+    <%- include('../partials/sidebar', { ativo: 'admin' }) %>
+
+    <main class="dashboard-content rota-conteudo">
+        <header class="admin-topo">
+            <div>
+                <p class="section-kicker">ÁREA ADMINISTRATIVA</p>
+                <h1>Visão geral do Dayly</h1>
+                <p>Como o sistema está sendo usado por todas as contas.</p>
+            </div>
+            <a href="/admin/usuarios" class="admin-botao">Gerenciar usuários</a>
+        </header>
+
+        <section class="painel" aria-label="Números do sistema">
+            <div class="painel-cartoes admin-cartoes">
+                <% cartoes.forEach(cartao => { %>
+                <div class="painel-cartao">
+                    <span class="painel-rotulo"><%= cartao.rotulo %></span>
+                    <strong class="painel-valor"><%= cartao.valor %></strong>
+                    <% if (cartao.detalhe) { %><span class="painel-detalhe"><%= cartao.detalhe %></span><% } %>
+                </div>
+                <% }) %>
+            </div>
+
+            <div class="painel-linha admin-linha">
+                <%- include('../partials/grafico-barras', { grafico }) %>
+
+                <section class="admin-cartao">
+                    <div class="admin-cartao-topo">
+                        <h2>Últimos cadastros</h2>
+                        <a href="/admin/usuarios">Ver todos</a>
+                    </div>
+
+                    <% if (ultimos.length === 0) { %>
+                        <p class="admin-vazio">Nenhum usuário cadastrado ainda.</p>
+                    <% } else { %>
+                        <ul class="admin-lista">
+                            <% ultimos.forEach(u => { %>
+                            <li>
+                                <span class="admin-avatar"><%= (u.nome || '?').trim().charAt(0).toUpperCase() %></span>
+                                <span class="admin-lista-texto">
+                                    <strong><%= u.nome %></strong>
+                                    <small><%= u.email %></small>
+                                </span>
+                                <span class="admin-lista-data">
+                                    <% if (u.perfil === 'ADMIN') { %><span class="admin-selo">Admin</span><% } %>
+                                    <%= new Date(u.criadoEm).toLocaleDateString('pt-BR') %>
+                                </span>
+                            </li>
+                            <% }) %>
+                        </ul>
+                    <% } %>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+</body>
+
+</html>

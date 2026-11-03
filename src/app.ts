@@ -9,6 +9,7 @@ import provaTrabalhoRoutes from './routes/ProvaTrabalhoRoutes';
 import estudoRoutes from './routes/EstudoRoutes';
 import tarefaRoutes from './routes/tarefas.Routes';
 import paginasRoutes from './routes/paginasRoutes';
+import adminRoutes from './routes/adminRoutes';
 import { exigirLoginPagina, verificarLogin } from './middlewares/auth';
 
 dotenv.config();
@@ -32,6 +33,11 @@ app.use(session({
   }
 }));
 
+// Deixa o usuário logado disponível em todas as views (menu lateral, perfil).
+app.use((req, res, next) => {
+  res.locals.usuario = req.session.usuario ?? null;
+  next();
+});
 
 // Páginas acessadas pelo navegador.
 app.get('/', (_req, res) => res.redirect('/login'));
@@ -45,6 +51,9 @@ app.use('/compromissos', compromissoRoutes);
 
 // Páginas do menu lateral: /provas, /estudos e /tarefas.
 app.use('/', paginasRoutes);
+
+// Área administrativa (somente perfil ADMIN).
+app.use('/admin', adminRoutes);
 
 // APIs (JSON) usadas pelo JavaScript dessas páginas.
 app.use('/api/compromissos', verificarLogin, provaTrabalhoRoutes);

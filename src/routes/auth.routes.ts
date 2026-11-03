@@ -68,7 +68,9 @@ router.post("/login", async (req, res) => {
     };
 
     return res.status(200).json({
-      mensagem: "Login realizado com sucesso"
+      mensagem: "Login realizado com sucesso",
+      // Administradores começam pela área administrativa.
+      destino: usuario.perfil === "ADMIN" ? "/admin" : "/dashboard"
     });
 
   } catch (error) {
