@@ -1,0 +1,53 @@
+<%
+  // Espera: painel = { cartoes, proximo, barras, tituloGrafico, unidade }, rotuloProximo
+  const maximo = Math.max(1, ...painel.barras.map(b => b.quantidade));
+  const plural = (n) => n === 1 ? painel.unidade[0] : painel.unidade[1];
+%>
+<section class="painel" aria-label="Resumo">
+    <div class="painel-cartoes">
+        <% painel.cartoes.forEach(cartao => { %>
+        <div class="painel-cartao">
+            <span class="painel-rotulo"><%= cartao.rotulo %></span>
+            <strong class="painel-valor"><%= cartao.valor %></strong>
+            <% if (cartao.detalhe) { %><span class="painel-detalhe"><%= cartao.detalhe %></span><% } %>
+        </div>
+        <% }) %>
+    </div>
+
+    <div class="painel-linha">
+        <div class="painel-proximo">
+            <span class="painel-rotulo"><%= rotuloProximo %></span>
+            <% if (painel.proximo) { %>
+                <span class="painel-selo"><%= painel.proximo.relativo %></span>
+                <strong class="painel-proximo-titulo"><%= painel.proximo.titulo %></strong>
+                <span class="painel-proximo-quando"><%= painel.proximo.data %> · <%= painel.proximo.horario %></span>
+                <% if (painel.proximo.tipo === 'PROVA' || painel.proximo.tipo === 'TRABALHO') { %>
+                    <span class="painel-detalhe"><%= painel.proximo.tipo === 'PROVA' ? 'Prova' : 'Trabalho' %></span>
+                <% } %>
+            <% } else { %>
+                <strong class="painel-proximo-titulo">Nada agendado</strong>
+                <span class="painel-detalhe">Sua agenda está livre por enquanto.</span>
+            <% } %>
+        </div>
+
+        <figure class="painel-grafico">
+            <figcaption class="painel-rotulo"><%= painel.tituloGrafico %></figcaption>
+            <div class="painel-barras" role="list">
+                <% painel.barras.forEach(barra => { %>
+                <div class="painel-barra<%= barra.destaque ? ' destaque' : '' %>" role="listitem" tabindex="0"
+                     aria-label="<%= barra.rotulo %> (<%= barra.detalhe %>): <%= barra.quantidade %> <%= plural(barra.quantidade) %>">
+                    <span class="painel-barra-valor"><%= barra.quantidade > 0 ? barra.quantidade : '' %></span>
+                    <span class="painel-barra-trilho">
+                        <span class="painel-barra-preenchimento" style="height: <%= Math.round(barra.quantidade / maximo * 100) %>%"></span>
+                    </span>
+                    <span class="painel-barra-rotulo"><%= barra.rotulo %></span>
+                    <span class="painel-dica" aria-hidden="true">
+                        <strong><%= barra.quantidade %> <%= plural(barra.quantidade) %></strong>
+                        <%= barra.detalhe %>
+                    </span>
+                </div>
+                <% }) %>
+            </div>
+        </figure>
+    </div>
+</section>

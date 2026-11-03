@@ -1,0 +1,618 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Tarefas | Dayly</title>
+    <link rel="icon" type="image/png" href="/images/dayly-icone.png">
+    <link rel="stylesheet" href="/css/style.css">
+
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+            font-family: 'DM Sans', Arial, sans-serif;
+            background: linear-gradient(135deg, #d5e0ef, #e9e4ef);
+            color: #303c52;
+        }
+
+        header {
+            max-width: 1200px;
+            margin: 0 auto 25px;
+            padding: 25px 30px;
+            background: #e8edf5;
+            border-radius: 18px;
+        }
+
+        header h1 {
+            margin: 0 0 8px;
+            color: #3f6098;
+        }
+
+        header p {
+            margin: 0;
+            color: #8791a3;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .botao {
+            border: none;
+            border-radius: 10px;
+            padding: 12px 18px;
+            background: #6687bd;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .botao:hover {
+            background: #3f6098;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #e5e9f1;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 22px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: #3f6098;
+        }
+
+        .formulario {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .campo.completo {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e5e9f1;
+            border-radius: 9px;
+            background: #fff;
+            color: #303c52;
+            font: inherit;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #6687bd;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 85px;
+        }
+
+        .botoes-form {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .cancelar {
+            background: #8791a3;
+        }
+
+        .filtros {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .filtros select {
+            max-width: 220px;
+        }
+
+        .lista {
+            display: grid;
+            gap: 13px;
+        }
+
+        .tarefa {
+            border: 1px solid #e5e9f1;
+            border-radius: 12px;
+            padding: 18px;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            align-items: center;
+            background: #fff;
+        }
+
+        .tarefa h3 {
+            margin: 0 0 7px;
+            color: #3f6098;
+        }
+
+        .tarefa p {
+            margin: 5px 0;
+            color: #8791a3;
+            overflow-wrap: anywhere;
+        }
+
+        .informacoes {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .etiqueta {
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: #e2ebf8;
+            color: #3f6098;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .acoes {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .acoes button {
+            border: none;
+            border-radius: 8px;
+            padding: 9px 12px;
+            cursor: pointer;
+            color: white;
+            background: #6687bd;
+        }
+
+        .acoes .excluir {
+            background: #c96b78;
+        }
+
+        .acoes .concluida {
+            background: #6d9b83;
+        }
+
+        .finalizada {
+            opacity: .65;
+        }
+
+        .finalizada h3 {
+            text-decoration: line-through;
+        }
+
+        .vazio {
+            text-align: center;
+            padding: 35px;
+            color: #8791a3;
+        }
+
+        @media (max-width: 650px) {
+            body {
+                padding: 15px;
+            }
+
+            .formulario {
+                grid-template-columns: 1fr;
+            }
+
+            .campo.completo {
+                grid-column: auto;
+            }
+
+            .tarefa {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body class="com-menu">
+
+<div class="dashboard-shell">
+    <%- include('../partials/sidebar', { ativo: 'tarefas' }) %>
+    <div class="dashboard-content rota-conteudo">
+
+
+<header>
+    <h1>Minhas Tarefas</h1>
+    <p>Organize suas atividades e acompanhe seu progresso.</p>
+</header>
+
+<main>
+
+    <div class="topo">
+        <div>
+            <h2>Organização pessoal</h2>
+            <p>Planeje suas atividades e não deixe nada para trás.</p>
+        </div>
+    </div>
+
+    <section class="card" id="cardFormulario">
+        <h2 id="tituloFormulario">Cadastrar nova tarefa</h2>
+
+        <form id="formTarefa" class="formulario">
+
+            <div class="campo completo">
+                <label for="titulo">Título da tarefa</label>
+                <input type="text" id="titulo" required maxlength="255"
+                    placeholder="Ex.: Fazer atividade de matemática">
+            </div>
+
+            <div class="campo completo">
+                <label for="descricao">Descrição</label>
+                <textarea id="descricao"
+                    placeholder="Adicione detalhes sobre a tarefa..."></textarea>
+            </div>
+
+            <div class="campo">
+                <label for="prazo">Prazo de entrega</label>
+                <input type="date" id="prazo">
+            </div>
+
+            <div class="campo">
+                <label for="prioridade">Prioridade</label>
+                <select id="prioridade">
+                    <option value="BAIXA">Baixa</option>
+                    <option value="MEDIA" selected>Média</option>
+                    <option value="ALTA">Alta</option>
+                </select>
+            </div>
+
+            <div class="campo" id="campoStatus" style="display:none">
+                <label for="status">Status</label>
+                <select id="status">
+                    <option value="PENDENTE">Pendente</option>
+                    <option value="EM_ANDAMENTO">Em andamento</option>
+                    <option value="CONCLUIDA">Concluída</option>
+                </select>
+            </div>
+
+            <div class="botoes-form">
+                <button type="submit" class="botao" id="botaoSalvar">
+                    Cadastrar tarefa
+                </button>
+
+                <button type="button" class="botao cancelar"
+                    id="botaoCancelar" style="display:none"
+                    onclick="cancelarEdicao()">
+                    Cancelar
+                </button>
+            </div>
+
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>Minhas atividades</h2>
+
+        <div class="filtros">
+            <select id="filtroStatus">
+                <option value="TODOS">Todos os status</option>
+                <option value="PENDENTE">Pendentes</option>
+                <option value="EM_ANDAMENTO">Em andamento</option>
+                <option value="CONCLUIDA">Concluídas</option>
+            </select>
+
+            <select id="filtroPrioridade">
+                <option value="TODAS">Todas as prioridades</option>
+                <option value="BAIXA">Baixa</option>
+                <option value="MEDIA">Média</option>
+                <option value="ALTA">Alta</option>
+            </select>
+        </div>
+
+        <div id="listaTarefas" class="lista">
+            <p class="vazio">Carregando tarefas...</p>
+        </div>
+    </section>
+
+</main>
+    </div>
+</div>
+
+<script>
+    const API = "/api/tarefas";
+
+    let tarefas = [];
+    let tarefaEditando = null;
+
+    const form = document.getElementById("formTarefa");
+    const lista = document.getElementById("listaTarefas");
+
+    function escapar(texto) {
+        return String(texto ?? "").replace(/[&<>"']/g, caractere => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        })[caractere]);
+    }
+
+    function formatarData(data) {
+        if (!data) return "Sem prazo";
+
+        const valor = String(data).slice(0, 10);
+        const partes = valor.split("-");
+
+        if (partes.length !== 3) return "Sem prazo";
+
+        return `${partes[2]}/${partes[1]}/${partes[0]}`;
+    }
+
+    function nomeStatus(status) {
+        const nomes = {
+            PENDENTE: "Pendente",
+            EM_ANDAMENTO: "Em andamento",
+            CONCLUIDA: "Concluída"
+        };
+
+        return nomes[status] || status;
+    }
+
+    function nomePrioridade(prioridade) {
+        const nomes = {
+            BAIXA: "Prioridade baixa",
+            MEDIA: "Prioridade média",
+            ALTA: "Prioridade alta"
+        };
+
+        return nomes[prioridade] || prioridade;
+    }
+
+    async function carregarTarefas() {
+        try {
+            const resposta = await fetch(API);
+
+            if (!resposta.ok) {
+                throw new Error("Não foi possível carregar as tarefas.");
+            }
+
+            tarefas = await resposta.json();
+            renderizarTarefas();
+
+        } catch (erro) {
+            lista.innerHTML = `<p class="vazio">${escapar(erro.message)}</p>`;
+        }
+    }
+
+    function renderizarTarefas() {
+        const status = document.getElementById("filtroStatus").value;
+        const prioridade = document.getElementById("filtroPrioridade").value;
+
+        const filtradas = tarefas.filter(tarefa => {
+            const correspondeStatus =
+                status === "TODOS" || tarefa.status === status;
+
+            const correspondePrioridade =
+                prioridade === "TODAS" || tarefa.prioridade === prioridade;
+
+            return correspondeStatus && correspondePrioridade;
+        });
+
+        if (filtradas.length === 0) {
+            lista.innerHTML = `
+                <p class="vazio">Nenhuma tarefa encontrada.</p>
+            `;
+            return;
+        }
+
+        lista.innerHTML = filtradas.map(tarefa => `
+            <article class="tarefa ${tarefa.status === "CONCLUIDA" ? "finalizada" : ""}">
+                <div>
+                    <h3>${escapar(tarefa.titulo)}</h3>
+
+                    <p>${escapar(tarefa.descricao || "Sem descrição.")}</p>
+
+                    <div class="informacoes">
+                        <span class="etiqueta">
+                            ${nomeStatus(tarefa.status)}
+                        </span>
+
+                        <span class="etiqueta">
+                            ${nomePrioridade(tarefa.prioridade)}
+                        </span>
+
+                        <span class="etiqueta">
+                            Prazo: ${formatarData(tarefa.prazo)}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="acoes">
+                    <button type="button"
+                        onclick="editarTarefa(${tarefa.id})">
+                        Editar
+                    </button>
+
+                    ${tarefa.status !== "CONCLUIDA" ? `
+                        <button type="button" class="concluida"
+                            onclick="concluirTarefa(${tarefa.id})">
+                            Concluir
+                        </button>
+                    ` : ""}
+
+                    <button type="button" class="excluir"
+                        onclick="excluirTarefa(${tarefa.id})">
+                        Excluir
+                    </button>
+                </div>
+            </article>
+        `).join("");
+    }
+
+    form.addEventListener("submit", async (evento) => {
+        evento.preventDefault();
+
+        const dados = {
+            titulo: document.getElementById("titulo").value.trim(),
+            descricao: document.getElementById("descricao").value.trim(),
+            prazo: document.getElementById("prazo").value || null,
+            prioridade: document.getElementById("prioridade").value
+        };
+
+        if (tarefaEditando !== null) {
+            dados.status = document.getElementById("status").value;
+        }
+
+        try {
+            const resposta = await fetch(
+                tarefaEditando !== null
+                    ? `${API}/${tarefaEditando}`
+                    : API,
+                {
+                    method: tarefaEditando !== null ? "PUT" : "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(dados)
+                }
+            );
+
+            const resultado = await resposta.json();
+
+            if (!resposta.ok) {
+                throw new Error(resultado.erro || "Erro ao salvar tarefa.");
+            }
+
+            alert(tarefaEditando !== null
+                ? "Tarefa atualizada com sucesso!"
+                : "Tarefa cadastrada com sucesso!");
+
+            cancelarEdicao();
+            await carregarTarefas();
+
+        } catch (erro) {
+            alert(erro.message);
+        }
+    });
+
+    function editarTarefa(id) {
+        const tarefa = tarefas.find(item => item.id === id);
+
+        if (!tarefa) return;
+
+        tarefaEditando = id;
+
+        document.getElementById("titulo").value = tarefa.titulo;
+        document.getElementById("descricao").value = tarefa.descricao || "";
+        document.getElementById("prazo").value = tarefa.prazo
+            ? String(tarefa.prazo).slice(0, 10)
+            : "";
+        document.getElementById("prioridade").value = tarefa.prioridade;
+        document.getElementById("status").value = tarefa.status;
+
+        document.getElementById("campoStatus").style.display = "flex";
+        document.getElementById("tituloFormulario").textContent = "Editar tarefa";
+        document.getElementById("botaoSalvar").textContent = "Salvar alterações";
+        document.getElementById("botaoCancelar").style.display = "inline-block";
+
+        document.getElementById("cardFormulario").scrollIntoView({
+            behavior: "smooth"
+        });
+    }
+
+    function cancelarEdicao() {
+        tarefaEditando = null;
+        form.reset();
+
+        document.getElementById("prioridade").value = "MEDIA";
+        document.getElementById("campoStatus").style.display = "none";
+        document.getElementById("tituloFormulario").textContent = "Cadastrar nova tarefa";
+        document.getElementById("botaoSalvar").textContent = "Cadastrar tarefa";
+        document.getElementById("botaoCancelar").style.display = "none";
+    }
+
+    async function concluirTarefa(id) {
+        if (!confirm("Deseja marcar esta tarefa como concluída?")) return;
+
+        try {
+            const resposta = await fetch(`${API}/${id}/concluir`, {
+                method: "PATCH"
+            });
+
+            const resultado = await resposta.json();
+
+            if (!resposta.ok) {
+                throw new Error(resultado.erro || "Erro ao concluir tarefa.");
+            }
+
+            await carregarTarefas();
+
+        } catch (erro) {
+            alert(erro.message);
+        }
+    }
+
+    async function excluirTarefa(id) {
+        if (!confirm("Tem certeza de que deseja excluir esta tarefa?")) return;
+
+        try {
+            const resposta = await fetch(`${API}/${id}`, {
+                method: "DELETE"
+            });
+
+            const resultado = await resposta.json();
+
+            if (!resposta.ok) {
+                throw new Error(resultado.erro || "Erro ao excluir tarefa.");
+            }
+
+            await carregarTarefas();
+
+        } catch (erro) {
+            alert(erro.message);
+        }
+    }
+
+    document.getElementById("filtroStatus")
+        .addEventListener("change", renderizarTarefas);
+
+    document.getElementById("filtroPrioridade")
+        .addEventListener("change", renderizarTarefas);
+
+    carregarTarefas();
+</script>
+
+</body>
+</html>

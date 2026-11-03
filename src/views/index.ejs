@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MinhaRotina | Dashboard</title>
+    <title>Dashboard | Dayly</title>
+    <link rel="icon" type="image/png" href="/images/dayly-icone.png">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
@@ -12,55 +13,22 @@
 
     <div class="dashboard-shell">
 
-        <aside class="sidebar">
-            <a href="/dashboard" class="brand">MinhaRotina</a>
-
-            <div class="profile">
-                <div class="profile-avatar">✦</div>
-                <div>
-                    <strong>Olá, estudante!</strong>
-                    <small>Organize sua rotina</small>
-                </div>
-            </div>
-
-            <nav class="side-nav">
-                <a href="/dashboard" class="active">
-                    <span class="side-icon">▦</span> Dashboard
-                </a>
-                <a href="/compromissos">
-                    <span class="side-icon">▣</span> Compromissos
-                </a>
-                <a href="/provas">
-                    <span class="side-icon">✎</span> Provas e trabalhos
-                </a>
-                <a href="/estudos">
-                    <span class="side-icon">▤</span> Estudos
-                </a>
-                <a href="/tarefas">
-                    <span class="side-icon">☑</span> Tarefas
-                </a>
-            </nav>
-
-            <a href="/logout" class="logout-link">
-                <span class="side-icon">↪</span> Sair da conta
-            </a>
-        </aside>
+        <%- include('partials/sidebar', { ativo: 'dashboard' }) %>
 
         <main class="dashboard-content">
 
             <header class="topbar">
                 <div class="welcome">
-<<<<<<< HEAD
                     <h1>Sua semana começa por aqui.</h1>
                     <p>Uma visão clara dos compromissos e dos estudos que vêm pela frente.</p>
                 </div>
             </header>
 
-            <section class="project-note" aria-labelledby="sobre-minharotina">
+            <section class="project-note" aria-labelledby="sobre-dayly">
                 <div class="project-note-copy">
                     <p class="section-kicker">SOBRE O PROJETO</p>
-                    <h2 id="sobre-minharotina">A rotina acadêmica, em um só lugar.</h2>
-                    <p>O MinhaRotina foi pensado para ajudar estudantes a acompanhar prazos e organizar o tempo de estudo sem depender de anotações espalhadas. Consulte o que está por vir e mantenha sua semana mais previsível.</p>
+                    <h2 id="sobre-dayly">A rotina acadêmica, em um só lugar.</h2>
+                    <p>O Dayly foi pensado para ajudar estudantes a acompanhar prazos e organizar o tempo de estudo sem depender de anotações espalhadas. Consulte o que está por vir e mantenha sua semana mais previsível.</p>
                     <div class="project-note-list" aria-label="Áreas do projeto">
                         <p><span>01</span> Compromissos do dia a dia</p>
                         <p><span>02</span> Provas e trabalhos</p>
@@ -73,18 +41,6 @@
                 </figure>
             </section>
 
-=======
-                    <h1>Olá! Vamos organizar seu dia?</h1>
-                    <p>Acompanhe suas atividades e seus estudos.</p>
-                </div>
-
-                <div class="topbar-tools">
-                    <div class="search-box">⌕ &nbsp; Minha rotina</div>
-                    <div class="tool-circle">♧</div>
-                </div>
-            </header>
-
->>>>>>> b0f1d70edeeec50873bf3c49aed522a4734da823
             <div class="dashboard-grid">
 
                 <section class="card card-commitments">
@@ -205,8 +161,4 @@
 
 </body>
 
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> b0f1d70edeeec50873bf3c49aed522a4734da823

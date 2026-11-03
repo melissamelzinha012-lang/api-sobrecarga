@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudos | Dayly</title>
+    <link rel="icon" type="image/png" href="/images/dayly-icone.png">
+    <link rel="stylesheet" href="/css/style.css">
+
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+            font-family: 'DM Sans', Arial, sans-serif;
+            background: linear-gradient(135deg, #d5e0ef, #e9e4ef);
+            color: #303c52;
+        }
+
+        header {
+            max-width: 1200px;
+            margin: 0 auto 25px;
+            padding: 25px 30px;
+            background: #e8edf5;
+            border-radius: 18px;
+        }
+
+        header h1 {
+            margin: 0 0 8px;
+            color: #3f6098;
+        }
+
+        header p {
+            margin: 0;
+            color: #8791a3;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .botao {
+            border: none;
+            border-radius: 10px;
+            padding: 12px 18px;
+            background: #6687bd;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .botao:hover {
+            background: #3f6098;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e5e9f1;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 22px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: #3f6098;
+        }
+
+        .formulario {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .campo.completo {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e5e9f1;
+            border-radius: 9px;
+            color: #303c52;
+            font: inherit;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #6687bd;
+        }
+
+        .botoes {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .acoes {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .sessao {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 18px;
+            border: 1px solid #e5e9f1;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            background: #fff;
+        }
+
+        .sessao h3 {
+            margin: 0 0 8px;
+            color: #3f6098;
+        }
+
+        .sessao p {
+            margin: 5px 0;
+            color: #8791a3;
+        }
+
+        .etiqueta {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: #e2ebf8;
+            color: #3f6098;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .sessao button {
+            border: none;
+            border-radius: 8px;
+            padding: 10px 13px;
+            background: #6687bd;
+            color: white;
+            cursor: pointer;
+        }
+
+        .sessao.concluida {
+            opacity: .65;
+        }
+
+        .sessao.concluida h3 {
+            text-decoration: line-through;
+        }
+
+        .vazio {
+            text-align: center;
+            padding: 30px;
+            color: #8791a3;
+        }
+
+        .mensagem {
+            margin-bottom: 15px;
+            color: #3f6098;
+            font-weight: bold;
+        }
+
+        @media (max-width: 650px) {
+            body {
+                padding: 15px;
+            }
+
+            .formulario {
+                grid-template-columns: 1fr;
+            }
+
+            .campo.completo {
+                grid-column: auto;
+            }
+
+            .sessao {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body class="com-menu">
+
+<div class="dashboard-shell">
+    <%- include('../partials/sidebar', { ativo: 'estudos' }) %>
+    <div class="dashboard-content rota-conteudo">
+
+
+<header>
+    <h1>Meus Estudos</h1>
+    <p>Organize sua rotina, planeje seus estudos e acompanhe seu progresso.</p>
+</header>
+
+<main>
+
+    <div class="topo">
+        <div>
+            <h2>Planejamento de estudos</h2>
+            <p>Deixe o Dayly organizar seus horários de estudo.</p>
+        </div>
+    </div>
+
+    <section class="card">
+        <h2>Gerar plano de estudos</h2>
+
+        <p>
+            Informe a matéria, o prazo e quantos minutos deseja estudar.
+            O sistema procurará horários livres para distribuir suas sessões.
+        </p>
+
+        <form id="formEstudo" class="formulario">
+
+            <div class="campo completo">
+                <label for="materia">Matéria</label>
+                <input
+                    type="text"
+                    id="materia"
+                    maxlength="120"
+                    placeholder="Ex.: Matemática"
+                    required
+                >
+            </div>
+
+            <div class="campo">
+                <label for="prazo">Estudar até</label>
+                <input type="date" id="prazo" required>
+            </div>
+
+            <div class="campo">
+                <label for="duracao">Tempo total de estudo (minutos)</label>
+                <input
+                    type="number"
+                    id="duracao"
+                    min="1"
+                    step="1"
+                    placeholder="Ex.: 200"
+                    required
+                >
+            </div>
+
+            <div class="botoes">
+                <button type="submit" class="botao">
+                    Gerar sessões automaticamente
+                </button>
+            </div>
+
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>Minha programação</h2>
+
+        <div id="mensagem" class="mensagem"></div>
+
+        <div class="acoes">
+            <button class="botao" type="button" onclick="carregarEstudos()">
+                Atualizar lista
+            </button>
+
+            <button class="botao" type="button" onclick="reorganizarEstudos()">
+                Reorganizar estudos atrasados
+            </button>
+        </div>
+
+        <div id="listaEstudos">
+            <p class="vazio">Carregando sessões...</p>
+        </div>
+    </section>
+
+</main>
+    </div>
+</div>
+
+<script>
+    const API = "/api/estudos";
+
+    const lista = document.getElementById("listaEstudos");
+    const mensagem = document.getElementById("mensagem");
+
+    function escapar(texto) {
+        return String(texto ?? "").replace(/[&<>"']/g, caractere => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        })[caractere]);
+    }
+
+    function formatarData(data) {
+        return new Date(data).toLocaleDateString("pt-BR");
+    }
+
+    function formatarHorario(data) {
+        return new Date(data).toLocaleTimeString("pt-BR", {
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+    }
+
+    async function carregarEstudos() {
+        try {
+            const resposta = await fetch(API);
+
+            if (!resposta.ok) {
+                throw new Error("Não foi possível carregar os estudos.");
+            }
+
+            const estudos = await resposta.json();
+
+            if (!Array.isArray(estudos) || estudos.length === 0) {
+                lista.innerHTML = `
+                    <p class="vazio">
+                        Você ainda não possui sessões de estudo cadastradas.
+                    </p>
+                `;
+                return;
+            }
+
+            lista.innerHTML = estudos.map(estudo => `
+                <article class="sessao ${estudo.concluido ? "concluida" : ""}">
+                    <div>
+                        <h3>${escapar(estudo.materia)}</h3>
+
+                        <p>
+                            ${formatarData(estudo.inicio)}
+                            • ${formatarHorario(estudo.inicio)}
+                            às ${formatarHorario(estudo.fim)}
+                        </p>
+
+                        <span class="etiqueta">
+                            ${estudo.concluido ? "Concluído" : "Pendente"}
+                        </span>
+                    </div>
+
+                    ${!estudo.concluido ? `
+                        <button
+                            type="button"
+                            onclick="concluirEstudo(${estudo.id})"
+                        >
+                            Marcar como concluído
+                        </button>
+                    ` : ""}
+                </article>
+            `).join("");
+
+        } catch (erro) {
+            lista.innerHTML = `
+                <p class="vazio">${escapar(erro.message)}</p>
+            `;
+        }
+    }
+
+    document.getElementById("formEstudo").addEventListener("submit", async evento => {
+        evento.preventDefault();
+
+        const materia = document.getElementById("materia").value.trim();
+        const prazo = document.getElementById("prazo").value;
+        const duracaoMinutos = Number(
+            document.getElementById("duracao").value
+        );
+
+        try {
+            const resposta = await fetch(`${API}/gerar`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    materia,
+                    prazo,
+                    duracaoMinutos
+                })
+            });
+
+            const resultado = await resposta.json();
+
+            if (!resposta.ok) {
+                throw new Error(resultado.erro || "Não foi possível gerar os estudos.");
+            }
+
+            mensagem.textContent =
+                `${resultado.length} sessão(ões) de estudo criada(s) com sucesso!`;
+
+            evento.target.reset();
+
+            await carregarEstudos();
+
+        } catch (erro) {
+            mensagem.textContent = erro.message;
+        }
+    });
+
+    async function concluirEstudo(id) {
+        try {
+            const resposta = await fetch(`${API}/${id}/concluir`, {
+                method: "PATCH"
+            });
+
+            const resultado = await resposta.json();
+
+            if (!resposta.ok) {
+                throw new Error(resultado.erro || "Erro ao concluir sessão.");
+            }
+
+            mensagem.textContent = "Sessão concluída com sucesso!";
+
+            await carregarEstudos();
+
+        } catch (erro) {
+            mensagem.textContent = erro.message;
+        }
+    }
+
+    async function reorganizarEstudos() {
+        try {
+            const resposta = await fetch(`${API}/reorganizar`, {
+                method: "POST"
+            });
+
+            const resultado = await resposta.json();
+
+            if (!resposta.ok) {
+                throw new Error(resultado.erro || "Erro ao reorganizar estudos.");
+            }
+
+            mensagem.textContent =
+                `${resultado.quantidade} sessão(ões) reorganizada(s).`;
+
+            await carregarEstudos();
+
+        } catch (erro) {
+            mensagem.textContent = erro.message;
+        }
+    }
+
+    carregarEstudos();
+</script>
+
+</body>
+</html>

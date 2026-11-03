@@ -1,21 +1,17 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> b0f1d70edeeec50873bf3c49aed522a4734da823
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
     <meta name="theme-color" content="#741f98">
-    <title>Entrar | MinhaRotina</title>
+    <title>Entrar | Dayly</title>
+    <link rel="icon" type="image/png" href="/images/dayly-icone.png">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body class="auth-page">
     <main class="auth-shell">
-        <section class="auth-aside" aria-label="Sobre o MinhaRotina">
-            <a class="auth-wordmark" href="/login">MinhaRotina</a>
+        <section class="auth-aside" aria-label="Sobre o Dayly">
+            <a class="auth-wordmark" href="/login"><img src="/images/dayly-logo.png" alt="Dayly"></a>
             <div class="auth-aside-copy">
                 <p class="auth-overline">PARA A VIDA DE ESTUDANTE</p>
                 <h1>Um pouco mais de clareza para a sua semana.</h1>
@@ -27,7 +23,7 @@
 
         <section class="auth-main" aria-labelledby="titulo-login">
             <div class="auth-main-inner">
-                <p class="auth-kicker">MINHAROTINA</p>
+                <p class="auth-kicker">DAYLY</p>
                 <h2 id="titulo-login">Entrar</h2>
                 <p class="auth-intro">Acesse sua conta para continuar de onde parou.</p>
 
@@ -48,63 +44,11 @@
                 <p class="auth-switch">Ainda não tem uma conta? <a href="/cadastro">Cadastre-se</a></p>
             </div>
         </section>
-=======
-    <title>Login | MinhaRotina</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body class="auth-page">
-
-    <main class="auth-card">
-        <p class="auth-foot">
-            Ainda não tem uma conta?
-            <a href="/cadastro">Cadastre-se</a>
-        </p>
-        
-        <p class="auth-brand">MinhaRotina</p>
-
-        <h1>Boas-vindas!</h1>
-        <p class="auth-intro">
-            Entre na sua conta para organizar seus estudos e compromissos.
-        </p>
-
-        <div id="mensagem" class="mensagem"></div>
-
-        <form id="form-login" class="auth-form">
-            <div class="field">
-                <label for="email">E-mail</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Digite seu e-mail"
-                    required
-                >
-            </div>
-
-            <div class="field">
-                <label for="senha">Senha</label>
-                <input
-                    type="password"
-                    id="senha"
-                    name="senha"
-                    placeholder="Digite sua senha"
-                    required
-                >
-            </div>
-
-            <button type="submit">Entrar na minha conta</button>
-        </form>
-
-        <p class="auth-foot">
-            Organize sua rotina com facilidade.
-        </p>
->>>>>>> b0f1d70edeeec50873bf3c49aed522a4734da823
     </main>
 
     <script>
         const formulario = document.getElementById('form-login');
         const mensagem = document.getElementById('mensagem');
-<<<<<<< HEAD
 
         formulario.addEventListener('submit', async (evento) => {
             evento.preventDefault();
@@ -122,52 +66,18 @@
                 });
                 const dados = await resposta.json();
 
-=======
-    
-        formulario.addEventListener('submit', async (evento) => {
-            evento.preventDefault();
-    
-            mensagem.textContent = '';
-            mensagem.className = 'mensagem';
-    
-            const email = document.getElementById('email').value;
-            const senha = document.getElementById('senha').value;
-    
-            try {
-                const resposta = await fetch('/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ email, senha })
-                });
-    
-                const dados = await resposta.json();
-    
->>>>>>> b0f1d70edeeec50873bf3c49aed522a4734da823
                 if (!resposta.ok) {
                     mensagem.textContent = dados.mensagem || 'E-mail ou senha inválidos.';
                     mensagem.classList.add('erro');
                     return;
                 }
-<<<<<<< HEAD
 
                 window.location.href = '/dashboard';
             } catch (erro) {
                 mensagem.textContent = 'Não foi possível conectar ao servidor. Tente novamente.';
-=======
-    
-                window.location.href = '/dashboard';
-            } catch (erro) {
-                mensagem.textContent = 'Não foi possível conectar ao servidor.';
->>>>>>> b0f1d70edeeec50873bf3c49aed522a4734da823
                 mensagem.classList.add('erro');
             }
         });
     </script>
-<<<<<<< HEAD
-=======
-
->>>>>>> b0f1d70edeeec50873bf3c49aed522a4734da823
 </body>
 </html>

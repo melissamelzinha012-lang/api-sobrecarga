@@ -4,10 +4,10 @@ import { EstudoService } from "../services/EstudoService";
 const service = new EstudoService();
 
 function obterUsuarioId(req: Request): number {
-  const usuarioId = Number(req.body.usuarioId ?? req.query.usuarioId);
+  const usuarioId = Number(req.session.usuario?.id);
 
   if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
-    throw new Error("Informe um usuarioId válido.");
+    throw new Error("Usuário não autenticado.");
   }
 
   return usuarioId;
@@ -17,7 +17,11 @@ function responderErro(res: Response, erro: unknown) {
   const mensagem =
     erro instanceof Error ? erro.message : "Erro interno do servidor.";
 
-  const status = mensagem.includes("não encontrada") ? 404 : 400;
+  const status = mensagem.includes("não encontrada")
+    ? 404
+    : mensagem.includes("não autenticado")
+      ? 401
+      : 400;
 
   return res.status(status).json({ erro: mensagem });
 }

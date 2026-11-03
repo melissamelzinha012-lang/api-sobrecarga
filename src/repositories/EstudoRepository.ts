@@ -73,7 +73,7 @@ export class EstudoRepository {
   async listarCompromissos(usuarioId: number) {
     return prisma.compromisso.findMany({
       where: { usuarioId },
-      orderBy: { inicio: "asc" },
+      orderBy: [{ data: "asc" }, { horarioInicio: "asc" }],
     });
   }
 }

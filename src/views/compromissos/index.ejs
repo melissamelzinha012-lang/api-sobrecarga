@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Compromissos | Sobrecarga</title>
+    <title>Compromissos | Dayly</title>
+    <link rel="icon" type="image/png" href="/images/dayly-icone.png">
+    <link rel="stylesheet" href="/css/style.css">
 
     <style>
         * {
@@ -21,7 +23,7 @@
         }
 
         header {
-            background: #6d4bc3;
+            background: #6687bd;
             color: white;
             padding: 30px;
         }
@@ -44,11 +46,11 @@
         }
 
         .topo h2 {
-            color: #6d4bc3;
+            color: #6687bd;
         }
 
         .botao {
-            background: #6d4bc3;
+            background: #6687bd;
             color: white;
             padding: 12px 16px;
             border-radius: 8px;
@@ -66,7 +68,7 @@
         }
 
         .card h3 {
-            color: #6d4bc3;
+            color: #6687bd;
             margin-bottom: 15px;
         }
 
@@ -103,7 +105,12 @@
     </style>
 </head>
 
-<body>
+<body class="com-menu">
+
+<div class="dashboard-shell">
+    <%- include('../partials/sidebar', { ativo: 'compromissos' }) %>
+    <div class="dashboard-content rota-conteudo">
+
 
     <header>
         <h1> Compromissos</h1>
@@ -111,6 +118,8 @@
     </header>
 
     <main>
+
+        <%- include('../partials/painel', { painel, rotuloProximo: 'Próximo compromisso' }) %>
 
         <div class="topo">
 
@@ -144,14 +153,14 @@
 
                     <p>
                         <strong>Data:</strong>
-                        <%= compromisso.data %>
+                        <%= new Date(compromisso.data).toLocaleDateString('pt-BR', { timeZone: 'UTC' }) %>
                     </p>
 
                     <p>
                         <strong> Horário:</strong>
-                        <%= compromisso.horarioInicio %>
+                        <%= new Date(compromisso.horarioInicio).toISOString().slice(11, 16) %>
                         -
-                        <%= compromisso.horarioFim %>
+                        <%= new Date(compromisso.horarioFim).toISOString().slice(11, 16) %>
                     </p>
 
 
@@ -189,6 +198,8 @@
         <% } %>
 
     </main>
+    </div>
+</div>
 
 </body>
 

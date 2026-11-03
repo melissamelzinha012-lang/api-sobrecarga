@@ -1,6 +1,7 @@
 
 import { Request, Response } from "express";
 import { CompromissoRepository } from "../repositories/compromissoRepository";
+import { painelCompromissos } from "../services/painelService";
 
 const compromissoRepository = new CompromissoRepository();
 
@@ -10,10 +11,37 @@ export class CompromissoController {
     const usuarioId = Number(req.session.usuario?.id);
 
     if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
-      return res.redirect("/auth/login");
+      return res.redirect("/login");
     }
 
     return res.render("compromissos/novo");
+  }
+
+  async editar(req: Request, res: Response) {
+    try {
+      const usuarioId = Number(req.session.usuario?.id);
+      const id = Number(req.params.id);
+
+      if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
+        return res.redirect("/login");
+      }
+
+      if (!Number.isInteger(id) || id <= 0) {
+        return res.status(400).send("ID inválido");
+      }
+
+      const compromisso =
+        await compromissoRepository.buscarPorId(id, usuarioId);
+
+      if (!compromisso) {
+        return res.status(404).send("Compromisso não encontrado");
+      }
+
+      return res.render("compromissos/novo", { compromisso });
+    } catch (error) {
+      console.error("Erro ao abrir edição do compromisso:", error);
+      return res.status(500).send("Erro ao abrir compromisso");
+    }
   }
 
   async listar(req: Request, res: Response) {
@@ -21,7 +49,7 @@ export class CompromissoController {
       const usuarioId = Number(req.session.usuario?.id);
 
       if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
-        return res.redirect("/auth/login");
+        return res.redirect("/login");
       }
 
       const compromissos =
@@ -29,6 +57,7 @@ export class CompromissoController {
 
       return res.render("compromissos/index", {
         compromissos,
+        painel: painelCompromissos(compromissos),
       });
     } catch (error) {
       console.error("Erro ao listar compromissos:", error);
@@ -42,7 +71,7 @@ export class CompromissoController {
       const id = Number(req.params.id);
 
       if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
-        return res.redirect("/auth/login");
+        return res.redirect("/login");
       }
 
       if (!Number.isInteger(id) || id <= 0) {
@@ -68,7 +97,7 @@ export class CompromissoController {
       const usuarioId = Number(req.session.usuario?.id);
 
       if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
-        return res.redirect("/auth/login");
+        return res.redirect("/login");
       }
 
       const {
@@ -118,7 +147,7 @@ export class CompromissoController {
       const id = Number(req.params.id);
 
       if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
-        return res.redirect("/auth/login");
+        return res.redirect("/login");
       }
 
       if (!Number.isInteger(id) || id <= 0) {
@@ -165,6 +194,11 @@ export class CompromissoController {
         return res.status(404).send("Compromisso não encontrado");
       }
 
+      // Formulário HTML (POST /:id/editar) volta para a lista; PUT continua respondendo JSON.
+      if (req.method === "POST") {
+        return res.redirect("/compromissos");
+      }
+
       return res.json({
         mensagem: "Compromisso atualizado com sucesso",
       });
@@ -180,7 +214,7 @@ export class CompromissoController {
       const id = Number(req.params.id);
 
       if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
-        return res.redirect("/auth/login");
+        return res.redirect("/login");
       }
 
       if (!Number.isInteger(id) || id <= 0) {

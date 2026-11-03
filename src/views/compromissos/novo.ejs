@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Novo compromisso | Sobrecarga</title>
+    <title><%= typeof compromisso !== 'undefined' && compromisso ? 'Editar compromisso' : 'Novo compromisso' %> | Dayly</title>
+    <link rel="icon" type="image/png" href="/images/dayly-icone.png">
+    <link rel="stylesheet" href="/css/style.css">
 
     <style>
         * {
@@ -21,7 +23,7 @@
         }
 
         header {
-            background: #6d4bc3;
+            background: #6687bd;
             color: white;
             padding: 30px;
         }
@@ -40,7 +42,7 @@
         }
 
         h2 {
-            color: #6d4bc3;
+            color: #6687bd;
             margin-bottom: 25px;
         }
 
@@ -68,8 +70,8 @@
             margin-top: 25px;
         }
 
-        button,
-        a {
+        .botoes button,
+        .botoes a {
             padding: 12px 18px;
             border-radius: 8px;
             border: none;
@@ -79,31 +81,42 @@
         }
 
         button {
-            background: #6d4bc3;
+            background: #6687bd;
             color: white;
         }
 
-        a {
+        .botoes a {
             background: #ddd;
             color: #333;
         }
     </style>
 </head>
 
-<body>
+<%
+  const editando = typeof compromisso !== 'undefined' && compromisso;
+  const valorData = editando ? new Date(compromisso.data).toISOString().slice(0, 10) : '';
+  const valorInicio = editando ? new Date(compromisso.horarioInicio).toISOString().slice(11, 16) : '';
+  const valorFim = editando ? new Date(compromisso.horarioFim).toISOString().slice(11, 16) : '';
+%>
+<body class="com-menu">
+
+<div class="dashboard-shell">
+    <%- include('../partials/sidebar', { ativo: 'compromissos' }) %>
+    <div class="dashboard-content rota-conteudo">
+
 
     <header>
-        <h1>Novo compromisso</h1>
-        <p>Cadastre um novo compromisso na sua rotina.</p>
+        <h1><%= editando ? 'Editar compromisso' : 'Novo compromisso' %></h1>
+        <p><%= editando ? 'Atualize os dados do compromisso.' : 'Cadastre um novo compromisso na sua rotina.' %></p>
     </header>
 
     <main>
 
         <div class="card">
 
-            <h2>Cadastrar compromisso</h2>
+            <h2><%= editando ? 'Dados do compromisso' : 'Cadastrar compromisso' %></h2>
 
-            <form action="/compromissos" method="POST">
+            <form action="<%= editando ? `/compromissos/${compromisso.id}/editar` : '/compromissos' %>" method="POST">
 
                 <div class="campo">
                     <label for="titulo">Título</label>
@@ -112,6 +125,7 @@
                         type="text"
                         id="titulo"
                         name="titulo"
+                        value="<%= editando ? compromisso.titulo : '' %>"
                         placeholder="Ex.: Aula de Matemática"
                         required
                     >
@@ -124,6 +138,7 @@
                         type="date"
                         id="data"
                         name="data"
+                        value="<%= valorData %>"
                         required
                     >
                 </div>
@@ -135,6 +150,7 @@
                         type="time"
                         id="horarioInicio"
                         name="horarioInicio"
+                        value="<%= valorInicio %>"
                         required
                     >
                 </div>
@@ -146,26 +162,16 @@
                         type="time"
                         id="horarioFim"
                         name="horarioFim"
+                        value="<%= valorFim %>"
                         required
                     >
                 </div>
 
-                <div class="campo">
-                    <label for="usuarioId">ID do usuário</label>
-
-                    <input
-                        type="number"
-                        id="usuarioId"
-                        name="usuarioId"
-                        min="1"
-                        required
-                    >
-                </div>
 
                 <div class="botoes">
 
                     <button type="submit">
-                        Cadastrar
+                        <%= editando ? 'Salvar alterações' : 'Cadastrar' %>
                     </button>
 
                     <a href="/compromissos">
@@ -179,6 +185,8 @@
         </div>
 
     </main>
+    </div>
+</div>
 
 </body>
 

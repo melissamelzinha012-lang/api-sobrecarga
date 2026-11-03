@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provas e Trabalhos | Dayly</title>
+    <link rel="icon" type="image/png" href="/images/dayly-icone.png">
+    <link rel="stylesheet" href="/css/style.css">
+
+    
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'DM Sans', sans-serif;
+        background: linear-gradient(135deg, #d5e0ef, #e9e4ef);
+        color: #303c52;
+        min-height: 100vh;
+    }
+
+    header {
+        background: #e8edf5;
+        color: #303c52;
+        padding: 30px;
+    }
+
+    header h1 {
+        color: #3f6098;
+        font-family: 'Manrope', sans-serif;
+        font-size: 28px;
+        margin-bottom: 8px;
+    }
+
+    header p {
+        color: #8791a3;
+        font-size: 13px;
+    }
+
+    main {
+        max-width: 1400px;
+        min-height: 500px;
+        margin: 0 auto;
+        padding: 30px;
+        background: #f9f8fc;
+        border-radius: 0 0 18px 18px;
+    }
+
+    .topo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+
+    .topo h2 {
+        color: #3f6098;
+        font-family: 'Manrope', sans-serif;
+        font-size: 20px;
+    }
+
+    .botao {
+        display: inline-block;
+        background: #6687bd;
+        color: white;
+        padding: 12px 17px;
+        border-radius: 10px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 700;
+        transition: .2s;
+    }
+
+    .botao:hover {
+        background: #3f6098;
+        transform: translateY(-2px);
+    }
+
+    .card {
+        background: #ffffff;
+        padding: 22px;
+        margin-bottom: 15px;
+        border: 1px solid #e5e9f1;
+        border-radius: 18px;
+        box-shadow: 0 4px 15px #35496808;
+    }
+
+    .card h3 {
+        color: #3f6098;
+        font-family: 'Manrope', sans-serif;
+        margin-bottom: 15px;
+    }
+
+    .card p {
+        margin-bottom: 8px;
+        color: #8791a3;
+        font-size: 13px;
+    }
+
+    .formulario {
+        display: none;
+        margin-bottom: 25px;
+    }
+
+    .formulario.ativo {
+        display: block;
+    }
+
+    .formulario h2 {
+        color: #3f6098;
+        margin-bottom: 20px;
+    }
+
+    .campo {
+        margin-bottom: 15px;
+    }
+
+    .campo label {
+        display: block;
+        margin-bottom: 7px;
+        color: #303c52;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .campo input,
+    .campo textarea,
+    .campo select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #e5e9f1;
+        border-radius: 10px;
+        background: white;
+        color: #303c52;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 14px;
+        outline: none;
+    }
+
+    .campo input:focus,
+    .campo textarea:focus,
+    .campo select:focus {
+        border-color: #6687bd;
+        box-shadow: 0 0 0 3px #6687bd20;
+    }
+
+    .campo textarea {
+        resize: vertical;
+        min-height: 90px;
+    }
+
+    .acoes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .excluir {
+        background: #c96b78;
+    }
+
+    .excluir:hover {
+        background: #a94e5b;
+    }
+
+    .cancelar {
+        background: #8791a3;
+    }
+
+    .cancelar:hover {
+        background: #68758b;
+    }
+
+    .vazio {
+        text-align: center;
+        background: #f4f6fa;
+        padding: 30px;
+    }
+
+    @media (max-width: 600px) {
+        header {
+            padding: 22px;
+        }
+
+        main {
+            padding: 18px;
+        }
+
+        .topo {
+            flex-direction: column;
+            gap: 15px;
+            align-items: stretch;
+        }
+
+        .topo .botao {
+            text-align: center;
+        }
+    }
+</style>
+
+</head>
+
+
+<body class="com-menu pagina-interna">
+
+<div class="dashboard-shell">
+    <%- include('../partials/sidebar', { ativo: 'provas' }) %>
+    <div class="dashboard-content rota-conteudo">
+
+
+    <header>
+        <h1>Provas e Trabalhos</h1>
+        <p>Organize suas avaliações e atividades escolares.</p>
+    </header>
+
+    <main>
+
+        <%- include('../partials/painel', { painel, rotuloProximo: 'Próxima avaliação' }) %>
+
+        <div class="topo">
+            <h2>Minhas avaliações</h2>
+
+            <button class="botao" onclick="mostrarFormulario()">
+                + Nova prova ou trabalho
+            </button>
+        </div>
+
+        <section class="card formulario" id="formulario">
+            <h2 id="tituloFormulario">Cadastrar avaliação</h2>
+
+            <form id="formProva">
+
+                <input type="hidden" id="id">
+
+                <div class="campo">
+                    <label for="titulo">Título</label>
+                    <input type="text" id="titulo" required>
+                </div>
+
+                <div class="campo">
+                    <label for="disciplina">Disciplina</label>
+                    <input type="text" id="disciplina" required>
+                </div>
+
+                <div class="campo">
+                    <label for="tipo">Tipo</label>
+                    <select id="tipo" required>
+                        <option value="PROVA">Prova</option>
+                        <option value="TRABALHO">Trabalho</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao"></textarea>
+                </div>
+
+                <div class="campo">
+                    <label for="data">Data</label>
+                    <input type="date" id="data" required>
+                </div>
+
+                <div class="campo">
+                    <label for="horario">Horário</label>
+                    <input type="time" id="horario" required>
+                </div>
+
+                <div class="acoes">
+                    <button type="submit" class="botao" id="botaoSalvar">
+                        Cadastrar
+                    </button>
+
+                    <button type="button" class="botao cancelar" onclick="cancelarFormulario()">
+                        Cancelar
+                    </button>
+                </div>
+
+            </form>
+        </section>
+
+        <section id="listaProvas">
+
+            <% if (provas.length===0) { %>
+
+                <div class="card vazio">
+                    <p>Nenhuma prova ou trabalho cadastrado.</p>
+                </div>
+
+                <% } else { %>
+
+                    <% provas.forEach(prova=> { %>
+
+                        <div class="card">
+
+                            <h3>
+                                <%= prova.titulo %>
+                            </h3>
+
+                            <p>
+                                <strong>Disciplina:</strong>
+                                <%= prova.disciplina || 'Não informada' %>
+                            </p>
+
+                            <p>
+                                <strong>Tipo:</strong>
+                                <%= prova.tipo==='PROVA' ? 'Prova' : 'Trabalho' %>
+                            </p>
+
+                            <p>
+                                <strong>Data:</strong>
+                                <%= new Date(prova.data).toLocaleDateString('pt-BR', { timeZone: 'UTC' }) %>
+                            </p>
+
+                            <p>
+                                <strong>Horário:</strong>
+                                <%= new Date(prova.horarioInicio).toISOString().slice(11, 16) %>
+                            </p>
+
+                            <% if (prova.descricao) { %>
+                                <p>
+                                    <strong>Descrição:</strong>
+                                    <%= prova.descricao %>
+                                </p>
+                                <% } %>
+
+                                    <div class="acoes">
+
+
+                                        <button class="botao" onclick="editarProva(this)" data-id="<%= prova.id %>"
+                                            data-titulo="<%= prova.titulo %>"
+                                            data-disciplina="<%= prova.disciplina || '' %>"
+                                            data-descricao="<%= prova.descricao || '' %>" data-tipo="<%= prova.tipo %>"
+                                            data-data="<%= new Date(prova.data).toISOString().slice(0, 10) %>"
+                                            data-horario="<%= new Date(prova.horarioInicio).toISOString().slice(11, 16) %>">
+                                            Editar
+                                        </button>
+
+
+                                        <button class="botao excluir" onclick="excluirProva('<%= prova.id %>')">
+                                            Excluir
+                                        </button>
+
+                                    </div>
+
+                        </div>
+
+                        <% }) %>
+
+                            <% } %>
+
+        </section>
+
+    </main>
+    </div>
+</div>
+
+    <script>
+        const formulario = document.getElementById('formulario');
+        const formProva = document.getElementById('formProva');
+
+        function mostrarFormulario() {
+            formProva.reset();
+            document.getElementById('id').value = '';
+            document.getElementById('tituloFormulario').textContent =
+                'Cadastrar avaliação';
+            document.getElementById('botaoSalvar').textContent = 'Cadastrar';
+
+            formulario.classList.add('ativo');
+            formulario.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function cancelarFormulario() {
+            formulario.classList.remove('ativo');
+            formProva.reset();
+        }
+
+
+        function editarProva(botao) {
+            const dados = botao.dataset;
+
+            document.getElementById('id').value = dados.id;
+            document.getElementById('titulo').value = dados.titulo;
+            document.getElementById('disciplina').value = dados.disciplina;
+            document.getElementById('descricao').value = dados.descricao;
+            document.getElementById('tipo').value = dados.tipo;
+            document.getElementById('data').value = dados.data;
+            document.getElementById('horario').value = dados.horario;
+
+            document.getElementById('tituloFormulario').textContent =
+                'Editar avaliação';
+
+            document.getElementById('botaoSalvar').textContent =
+                'Salvar alterações';
+
+            formulario.classList.add('ativo');
+            formulario.scrollIntoView({ behavior: 'smooth' });
+        }
+
+
+        formProva.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const id = document.getElementById('id').value;
+
+            const dados = {
+                titulo: document.getElementById('titulo').value,
+                disciplina: document.getElementById('disciplina').value,
+                descricao: document.getElementById('descricao').value,
+                tipo: document.getElementById('tipo').value,
+                data: document.getElementById('data').value,
+                horario: document.getElementById('horario').value
+            };
+
+            try {
+                const resposta = await fetch(
+                    id ? `/api/compromissos/${id}` : '/api/compromissos',
+                    {
+                        method: id ? 'PUT' : 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(dados)
+                    }
+                );
+
+                const resultado = await resposta.json();
+
+                if (!resposta.ok) {
+                    throw new Error(resultado.mensagem || 'Não foi possível salvar.');
+                }
+
+                alert(id ? 'Avaliação atualizada!' : 'Avaliação cadastrada!');
+                window.location.reload();
+
+            } catch (erro) {
+                alert(erro.message);
+            }
+        });
+
+        async function excluirProva(id) {
+            if (!confirm('Deseja realmente excluir esta avaliação?')) {
+                return;
+            }
+
+            try {
+                const resposta = await fetch(`/api/compromissos/${id}`, {
+                    method: 'DELETE'
+                });
+
+                const resultado = await resposta.json();
+
+                if (!resposta.ok) {
+                    throw new Error(resultado.mensagem || 'Erro ao excluir.');
+                }
+
+                alert('Avaliação excluída!');
+                window.location.reload();
+
+            } catch (erro) {
+                alert(erro.message);
+            }
+        }
+    </script>
+
+</body>
+
+</html>

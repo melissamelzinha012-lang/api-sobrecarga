@@ -1,0 +1,33 @@
+<%
+  const paginaAtiva = typeof ativo !== 'undefined' ? ativo : '';
+  const links = [
+    { chave: 'dashboard', href: '/dashboard', icone: '▦', texto: 'Dashboard' },
+    { chave: 'compromissos', href: '/compromissos', icone: '▣', texto: 'Compromissos' },
+    { chave: 'provas', href: '/provas', icone: '✎', texto: 'Provas e trabalhos' },
+    { chave: 'estudos', href: '/estudos', icone: '▤', texto: 'Estudos' },
+    { chave: 'tarefas', href: '/tarefas', icone: '☑', texto: 'Tarefas' },
+  ];
+%>
+<aside class="sidebar">
+    <a href="/dashboard" class="brand"><img src="/images/dayly-logo-escuro.png" alt="Dayly"></a>
+
+    <div class="profile">
+        <div class="profile-avatar">✦</div>
+        <div>
+            <strong>Olá, estudante!</strong>
+            <small>Organize sua rotina</small>
+        </div>
+    </div>
+
+    <nav class="side-nav">
+        <% links.forEach(link => { %>
+        <a href="<%= link.href %>"<% if (link.chave === paginaAtiva) { %> class="active" aria-current="page"<% } %>>
+            <span class="side-icon"><%= link.icone %></span> <%= link.texto %>
+        </a>
+        <% }) %>
+    </nav>
+
+    <a href="/logout" class="logout-link">
+        <span class="side-icon">↪</span> Sair da conta
+    </a>
+</aside>

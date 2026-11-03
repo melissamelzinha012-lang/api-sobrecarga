@@ -5,41 +5,50 @@ const prisma = new PrismaClient();
 export interface ProvaTrabalhoDados {
   titulo: string;
   disciplina: string;
-  descricao?: string;
+  descricao?: string | null;
   data: Date;
-  horario?: string;
+  horarioInicio: Date;
+  horarioFim: Date;
   tipo: TipoCompromisso;
 }
 
 class ProvaTrabalhoRepository {
-  async criar(dados: ProvaTrabalhoDados) {
+  async criar(usuarioId: number, dados: ProvaTrabalhoDados) {
     return prisma.compromisso.create({
-      data: dados,
+      data: { ...dados, usuarioId },
     });
   }
 
-  async listar() {
+  async listar(usuarioId: number) {
     return prisma.compromisso.findMany({
-      orderBy: { data: "asc" },
+      where: {
+        usuarioId,
+        tipo: { in: [TipoCompromisso.PROVA, TipoCompromisso.TRABALHO] },
+      },
+      orderBy: [{ data: "asc" }, { horarioInicio: "asc" }],
     });
   }
 
-  async buscarPorId(id: number) {
-    return prisma.compromisso.findUnique({
-      where: { id },
+  async buscarPorId(id: number, usuarioId: number) {
+    return prisma.compromisso.findFirst({
+      where: { id, usuarioId },
     });
   }
 
-  async atualizar(id: number, dados: Partial<ProvaTrabalhoDados>) {
-    return prisma.compromisso.update({
-      where: { id },
+  async atualizar(
+    id: number,
+    usuarioId: number,
+    dados: Partial<ProvaTrabalhoDados>
+  ) {
+    return prisma.compromisso.updateMany({
+      where: { id, usuarioId },
       data: dados,
     });
   }
 
-  async excluir(id: number) {
-    return prisma.compromisso.delete({
-      where: { id },
+  async excluir(id: number, usuarioId: number) {
+    return prisma.compromisso.deleteMany({
+      where: { id, usuarioId },
     });
   }
 }

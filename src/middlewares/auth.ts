@@ -15,3 +15,18 @@ export function verificarLogin(
 
   next();
 }
+
+
+// Para páginas: quem não está logado volta para a tela de login.
+export function exigirLoginPagina(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  if (!req.session.usuario) {
+    res.redirect('/login');
+    return;
+  }
+
+  next();
+}

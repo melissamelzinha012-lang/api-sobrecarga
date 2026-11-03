@@ -19,6 +19,12 @@ router.get(
   compromissoController.listar.bind(compromissoController)
 );
 
+// Abrir formulário de edição
+router.get(
+  "/:id/editar",
+  compromissoController.editar.bind(compromissoController)
+);
+
 router.post(
   "/:id/editar",
   compromissoController.atualizar.bind(compromissoController)
@@ -36,10 +42,6 @@ router.get(
   compromissoController.buscarPorId.bind(compromissoController)
 );
 
-router.post(
-  "/:id/excluir",
-  compromissoController.excluir.bind(compromissoController)
-);
 
 
 // Criar compromisso

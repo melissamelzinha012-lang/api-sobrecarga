@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> e74588f921c0bc25427fe78e73d0980303bb59b0
 import { EstudoRepository } from "../repositories/EstudoRepository";
 
 const repository = new EstudoRepository();
@@ -30,8 +26,6 @@ function inicioDoExpediente(data: Date): Date {
   return inicio;
 }
 
-<<<<<<< HEAD
-=======
 function combinarDataEHorario(data: Date, horario: Date): Date {
   const resultado = new Date(data);
   resultado.setHours(
@@ -43,7 +37,6 @@ function combinarDataEHorario(data: Date, horario: Date): Date {
   return resultado;
 }
 
->>>>>>> e74588f921c0bc25427fe78e73d0980303bb59b0
 export class EstudoService {
   async listar(usuarioId: number) {
     return repository.listarPorUsuario(usuarioId);
@@ -78,17 +71,6 @@ export class EstudoService {
     ]);
 
     const ocupados = [
-<<<<<<< HEAD
-      ...compromissos.map((item: { inicio: string; fim: string }) => ({
-        inicio: new Date(item.inicio),
-        fim: new Date(item.fim),
-      })),
-      ...estudos
-        .filter((item: { concluido: any; }) => !item.concluido)
-        .map((item: { inicio: string | number | Date; fim: string | number | Date; }) => ({
-          inicio: new Date(item.inicio),
-          fim: new Date(item.fim),
-=======
       ...compromissos.map((item: { data: Date; horarioInicio: Date; horarioFim: Date }) => {
         const inicio = combinarDataEHorario(
           item.data,
@@ -113,7 +95,6 @@ export class EstudoService {
         .map((item: { inicio: Date; fim: Date }) => ({
           inicio: item.inicio,
           fim: item.fim,
->>>>>>> e74588f921c0bc25427fe78e73d0980303bb59b0
         })),
     ];
 
@@ -126,19 +107,10 @@ export class EstudoService {
       const fimExpediente = new Date(cursor);
       fimExpediente.setHours(HORA_FIM, 0, 0, 0);
 
-<<<<<<< HEAD
-      // Começa às 8h ou no horário inicial informado,
-      // o que for mais tarde.
-=======
->>>>>>> e74588f921c0bc25427fe78e73d0980303bb59b0
       let inicio = new Date(
         Math.max(cursor.getTime(), inicioExpediente.getTime())
       );
 
-<<<<<<< HEAD
-      // Avança para o próximo dia se já passou das 21h.
-=======
->>>>>>> e74588f921c0bc25427fe78e73d0980303bb59b0
       if (inicio >= fimExpediente) {
         cursor.setDate(cursor.getDate() + 1);
         cursor = inicioDoExpediente(cursor);
@@ -208,8 +180,6 @@ export class EstudoService {
       prazo
     );
 
-<<<<<<< HEAD
-=======
     const quantidadeNecessaria = Math.ceil(
       duracaoMinutos / DURACAO_SESSAO
     );
@@ -220,7 +190,6 @@ export class EstudoService {
       );
     }
 
->>>>>>> e74588f921c0bc25427fe78e73d0980303bb59b0
     let restante = duracaoMinutos;
     const sessoesCriadas = [];
 
@@ -234,14 +203,7 @@ export class EstudoService {
         restante
       );
 
-<<<<<<< HEAD
-      const fim = somarMinutos(
-        horario.inicio,
-        duracao
-      );
-=======
       const fim = somarMinutos(horario.inicio, duracao);
->>>>>>> e74588f921c0bc25427fe78e73d0980303bb59b0
 
       const sessao = await repository.criar({
         usuarioId,
@@ -254,35 +216,12 @@ export class EstudoService {
       restante -= duracao;
     }
 
-<<<<<<< HEAD
-    if (restante > 0) {
-      throw new Error(
-        `Não há horários suficientes antes do prazo. ` +
-        `Faltam ${restante} minutos de estudo.`
-      );
-    }
-
-=======
->>>>>>> e74588f921c0bc25427fe78e73d0980303bb59b0
     return sessoesCriadas;
   }
 
   async reorganizar(usuarioId: number) {
     const estudos = await repository.listarPorUsuario(usuarioId);
     const agora = new Date();
-<<<<<<< HEAD
-
-    const pendentes = estudos
-      .filter(
-        (item: { concluido: any; fim: string | number | Date; }) =>
-          !item.concluido &&
-          new Date(item.fim) < agora
-      )
-      .sort(
-        (a: { inicio: string | number | Date; }, b: { inicio: string | number | Date; }) =>
-          new Date(a.inicio).getTime() -
-          new Date(b.inicio).getTime()
-=======
     const limitePeriodo = somarMinutos(agora, 7 * 24 * 60);
 
     const pendentes = estudos
@@ -291,24 +230,12 @@ export class EstudoService {
       )
       .sort(
         (a: { inicio: Date }, b: { inicio: Date }) => a.inicio.getTime() - b.inicio.getTime()
->>>>>>> e74588f921c0bc25427fe78e73d0980303bb59b0
       );
 
     const reagendados: number[] = [];
 
     for (const estudo of pendentes) {
       const duracao = Math.ceil(
-<<<<<<< HEAD
-        (new Date(estudo.fim).getTime() -
-          new Date(estudo.inicio).getTime()) /
-          60_000
-      );
-
-      const horarios = await this.buscarHorariosLivres(
-        usuarioId,
-        agora,
-        somarMinutos(agora, 7 * 24 * 60)
-=======
         (estudo.fim.getTime() - estudo.inicio.getTime()) / 60_000
       );
 
@@ -320,23 +247,15 @@ export class EstudoService {
         usuarioId,
         agora,
         limitePeriodo
->>>>>>> e74588f921c0bc25427fe78e73d0980303bb59b0
       );
 
       const horario = horarios.find((item) => {
         const fim = somarMinutos(item.inicio, duracao);
-<<<<<<< HEAD
-
-=======
->>>>>>> e74588f921c0bc25427fe78e73d0980303bb59b0
         const limite = new Date(item.inicio);
         limite.setHours(HORA_FIM, 0, 0, 0);
 
         return (
           fim <= limite &&
-<<<<<<< HEAD
-          fim <= somarMinutos(agora, 7 * 24 * 60)
-=======
           fim <= limitePeriodo &&
           !estudos.some(
             (outro: { id: number; concluido: boolean; inicio: Date; fim: Date }) =>
@@ -344,7 +263,6 @@ export class EstudoService {
               !outro.concluido &&
               sobrepoe(item.inicio, fim, outro.inicio, outro.fim)
           )
->>>>>>> e74588f921c0bc25427fe78e73d0980303bb59b0
         );
       });
 
